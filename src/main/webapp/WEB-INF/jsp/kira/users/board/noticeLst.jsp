@@ -18,7 +18,7 @@ function regBoardFn(){
 <body>
 	<div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
           
-          <h2 class="sub-header">공지사항 TEST
+          <h2 class="sub-header">공지사항 TEST   
           		<button 	onclick="regBoardFn();"	type="button" class="btn btn-success"	style="float : right;">작성</button>
           </h2>
           
