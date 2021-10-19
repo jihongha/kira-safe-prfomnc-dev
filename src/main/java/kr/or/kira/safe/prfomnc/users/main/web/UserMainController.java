@@ -57,5 +57,5 @@ public class UserMainController {
 	/** EgovPropertyService */
 	@Resource(name = "propertiesService")
 	protected EgovPropertyService propertiesService;
-	
+	  
 }
