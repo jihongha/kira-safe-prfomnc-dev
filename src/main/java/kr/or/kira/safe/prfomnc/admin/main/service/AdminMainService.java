@@ -13,21 +13,15 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package kr.or.kira.safe.prfomnc.users.intrcn.web;
+package kr.or.kira.safe.prfomnc.admin.main.service;
 
 import java.util.HashMap;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-
-import org.springframework.stereotype.Controller;
-import org.springframework.ui.ModelMap;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import egovframework.rte.psl.dataaccess.util.EgovMap;
 
 /**
- * @Class Name : UserMainController.java
- * @Description : UserMainController Class
+ * @Class Name : UserMainService.java
+ * @Description : UserMainService Class
  * @Modification Information
  * @
  * @  수정일      수정자              수정내용
@@ -39,24 +33,24 @@ import org.springframework.web.bind.annotation.RequestParam;
  * @version 1.0
  * @see
  *
+ *  Copyright (C) by MOPAS All right reserved.
  */
-
-@Controller
-public class UserIntrcnController {
+public interface AdminMainService {
 	
 	/**
-	 * 건안성소개
+	 * 관리자 계정정보 존재여부 확인
 	 * @param paramMap
-	 * @param model
 	 * @return
-	 * @throws Exception
 	 */
-	@RequestMapping(value = "/user/intrcn/intrcn.do")
-	public String intrcn(@RequestParam HashMap paramMap, ModelMap model, HttpServletRequest request, HttpServletResponse response ) throws Exception {
-		
-		model.addAttribute("topMenuCd", "intrcn");
-		model.addAttribute("subMenuCd", "intrcn");
-		
-		return "users/intrcn/intrcn.bppTiles";
-	}
+	int selectKppIntraOpeMembExstCnt(HashMap<String, String> paramMap) throws Exception;
+	
+	/**
+	 * 관리자 정보 조회
+	 * @param paramMap
+	 * @return
+	 */
+	EgovMap selectKppIntraOpeMembInfo(HashMap<String, String> paramMap) throws Exception;
+
+
+	 
 }

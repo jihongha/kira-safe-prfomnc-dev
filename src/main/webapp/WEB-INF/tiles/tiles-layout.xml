@@ -2,29 +2,74 @@
 <!DOCTYPE tiles-definitions PUBLIC "-//Apache Software Foundation//DTD Tiles Configuration 2.1//EN" "http://tiles.apache.org/dtds/tiles-config_2_1.dtd">
  
 <tiles-definitions>
-    <!-- 메뉴 탭 타일즈 -->
-    <definition name="layouts-tiles"         	template="/WEB-INF/tiles/tiles-layout.jsp">
+    <!-- 사용자 탭 타일즈 -->
+    <definition name="layouts-tiles"         	template="/WEB-INF/tiles/tilesLayout.jsp">
         <put-attribute name="loadFile"        	value="/WEB-INF/tiles/inc/loadFile.jsp" />
         <put-attribute name="header"           	value="/WEB-INF/tiles/inc/header.jsp" />
         <put-attribute name="left"            	value="/WEB-INF/tiles/inc/left.jsp" />
         <put-attribute name="body"           	value=""/>
         <put-attribute name="footer"        	value="/WEB-INF/tiles/inc/footer.jsp" />
     </definition>
+    
+    <!-- noFrame -->
+    <definition name="noFrame-tiles"         	template="/WEB-INF/tiles/noFrameTilesLayout.jsp">
+        <put-attribute name="loadFile"        	value="/WEB-INF/tiles/inc/loadFile.jsp" />
+        <put-attribute name="body"           	value=""/>
+    </definition>
+    
+    <!-- admin Frame -->
+    <definition name="adminFrame-tiles"        	template="/WEB-INF/tiles/adminTilesLayout.jsp">
+        <put-attribute name="loadFile"        	value="/WEB-INF/tiles/inc/loadFile.jsp" />
+    	<put-attribute name="header"           	value="/WEB-INF/tiles/inc/adminHeader.jsp" />
+        <put-attribute name="body"           	value=""/>
+        <put-attribute name="footer"        	value="/WEB-INF/tiles/inc/adminFooter.jsp" />
+    </definition>
  	
- 	<definition name="*.tiles" 		extends="layouts-tiles">
+ 	<!-- 사용자 기본 타일즈 -->
+ 	<definition name="*.bppTiles" 		extends="layouts-tiles">
 		<put-attribute name="body" expression="/WEB-INF/jsp/kira/{1}.jsp" />
 	</definition>
-	<definition name="*/*.tiles" 	extends="layouts-tiles">
+	<definition name="*/*.bppTiles" 	extends="layouts-tiles">
 		<put-attribute name="body" expression="/WEB-INF/jsp/kira/{1}/{2}.jsp" />
 	</definition>
-	<definition name="*/*/*.tiles" 	extends="layouts-tiles">
+	<definition name="*/*/*.bppTiles" 	extends="layouts-tiles">
 		<put-attribute name="body" expression="/WEB-INF/jsp/kira/{1}/{2}/{3}.jsp" />
 	</definition>
-	<definition name="*/*/*/*.tiles" 	extends="layouts-tiles">
+	<definition name="*/*/*/*.bppTiles" 	extends="layouts-tiles">
 		<put-attribute name="body" expression="/WEB-INF/jsp/kira/{1}/{2}/{3}/{4}.jsp" />
 	</definition>
+	<!-- 사용자 기본 타일즈 -->
 	
-
+	<!-- noFrame 타일즈 -->
+	<definition name="*.noTiles" 		extends="noFrame-tiles">
+		<put-attribute name="body" expression="/WEB-INF/jsp/kira/{1}.jsp" />
+	</definition>
+	<definition name="*/*.noTiles" 		extends="noFrame-tiles">
+		<put-attribute name="body" expression="/WEB-INF/jsp/kira/{1}/{2}.jsp" />
+	</definition>
+	<definition name="*/*/*.noTiles" 	extends="noFrame-tiles">
+		<put-attribute name="body" expression="/WEB-INF/jsp/kira/{1}/{2}/{3}.jsp" />
+	</definition>
+	<definition name="*/*/*/*.noTiles" 	extends="noFrame-tiles">
+		<put-attribute name="body" expression="/WEB-INF/jsp/kira/{1}/{2}/{3}/{4}.jsp" />
+	</definition>
+	<!-- noFrame 타일즈 -->
+	
+	
+	<!-- adminFrame 타일즈 -->
+	<definition name="*.kppTiles" 		extends="adminFrame-tiles">
+		<put-attribute name="body" expression="/WEB-INF/jsp/kira/{1}.jsp" />
+	</definition>
+	<definition name="*/*.kppTiles" 	extends="adminFrame-tiles">
+		<put-attribute name="body" expression="/WEB-INF/jsp/kira/{1}/{2}.jsp" />
+	</definition>
+	<definition name="*/*/*.kppTiles" 	extends="adminFrame-tiles">
+		<put-attribute name="body" expression="/WEB-INF/jsp/kira/{1}/{2}/{3}.jsp" />
+	</definition>
+	<definition name="*/*/*/*.kppTiles" extends="adminFrame-tiles">
+		<put-attribute name="body" expression="/WEB-INF/jsp/kira/{1}/{2}/{3}/{4}.jsp" />
+	</definition>
+	<!-- adminFrame 타일즈 -->
 
 
 </tiles-definitions>

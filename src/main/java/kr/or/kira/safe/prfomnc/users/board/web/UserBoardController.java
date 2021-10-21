@@ -75,7 +75,7 @@ public class UserBoardController {
 		model.addAttribute("topMenuCd", "board");
 		model.addAttribute("subMenuCd", "notice");
 		
-		return "users/board/noticeLst.tiles";
+		return "users/board/noticeLst.bppTiles";
 	}
 	
 	
@@ -94,7 +94,7 @@ public class UserBoardController {
 		model.addAttribute("topMenuCd", "board");
 		model.addAttribute("subMenuCd", "notice");
 		
-		return "users/board/noticeWrite.tiles";
+		return "users/board/noticeWrite.bppTiles";
 	}
 	
 	
@@ -111,7 +111,7 @@ public class UserBoardController {
 		model.addAttribute("topMenuCd", "board");
 		model.addAttribute("subMenuCd", "dataRoom");
 		
-		return "users/board/dataRoomLst.tiles";
+		return "users/board/dataRoomLst.bppTiles";
 	}
 	
 	
@@ -130,7 +130,7 @@ public class UserBoardController {
 		model.addAttribute("topMenuCd", "board");
 		model.addAttribute("subMenuCd", "nesDta");
 		
-		return "users/board/nesDtaLst.tiles";
+		return "users/board/nesDtaLst.bppTiles";
 	}
 	
 	
@@ -149,7 +149,7 @@ public class UserBoardController {
 		model.addAttribute("topMenuCd", "board");
 		model.addAttribute("subMenuCd", "qna");
 		
-		return "users/board/qnaLst.tiles";
+		return "users/board/qnaLst.bppTiles";
 	}
 	
 }

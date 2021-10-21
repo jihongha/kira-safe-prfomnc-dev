@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="kr.or.kira.safe.prfomnc.admin.main.service.impl.AdminMainMapper">
+	
+	
+	<!-- 관리자 계정정보 존재여부 확인 -->
+	<select id="selectKppIntraOpeMembExstCnt" parameterType="hashMap" resultType="int">
+		SELECT 
+			COUNT(1)
+		FROM 
+			KPP_INTRA_OPE_MEMB_MGM
+		WHERE
+			USE_AT				=		'Y'
+		AND
+			KPP_SBSCRB_CONFM_AT	=		'Y'
+		AND
+			KPP_MEMB_ID			=		#{kppMembId}
+	</select>
+	
+	<!-- 관리자 정보 조회 -->
+	<select id="selectKppIntraOpeMembInfo" parameterType="hashMap" resultType="egovMap">
+		SELECT 
+			KPP_INTRA_OPE_MEMB_SEQ_NO
+			,KPP_MEMB_ID
+			,KPP_MEMB_PWD
+			,KPP_MEMB_NM
+			,KPP_DEPT_NM
+			,KPP_SBSCRB_CONFM_AT
+			,USE_AT
+			,FIRST_WRTR_ID
+			,FIRST_CRTN_DT
+			,LAST_UPDUSR_ID
+			,LAST_UPDT_DT
+		FROM 
+			KPP_INTRA_OPE_MEMB_MGM
+		WHERE
+			USE_AT				=		'Y'
+		AND
+			KPP_SBSCRB_CONFM_AT	=		'Y'
+		AND
+			KPP_MEMB_ID			=		#{kppMembId}
+		AND
+			KPP_MEMB_PWD		=		#{kppMembPwd}	
+	</select>
+	
+</mapper>
