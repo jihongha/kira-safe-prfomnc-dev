@@ -24,6 +24,11 @@ function loginExecFn(){
 			    	},
 			    type:'POST',
 			    success: function(data){
+			    	if(data.loginSuccAt == "Y"){
+			    		location.href="/admin/main/main.do";
+			    	}else{
+			    		alert("현재 입력하신 아이디 또는 비밀번호가 등록되어 있지 않거나,\n등록된 정보와 일치하지 않습니다.");
+			    	}
 			    	
 			    } 
 				
@@ -44,7 +49,7 @@ function loginExecFn(){
 
 </head>
 <body>
-	<div class="col-md-6 col-md-offset-3">
+	<div class="col-md-2 col-md-offset-5"	style="margin-top : 10%;">
         <form 	id="kppLoginForm"		name="kppLoginForm"		class="form-signin"	method="post"	onsubmit="loginExecFn();">
 	        <h2 class="form-signin-heading">관리자 로그인</h2>
 	        <label for="kppMembId" class="sr-only">kppMembId</label>

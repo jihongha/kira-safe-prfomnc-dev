@@ -15,6 +15,8 @@
 			KPP_SBSCRB_CONFM_AT	=		'Y'
 		AND
 			KPP_MEMB_ID			=		#{kppMembId}
+		AND
+			KPP_MEMB_PWD		=		#{kppMembPwd}		
 	</select>
 	
 	<!-- 관리자 정보 조회 -->

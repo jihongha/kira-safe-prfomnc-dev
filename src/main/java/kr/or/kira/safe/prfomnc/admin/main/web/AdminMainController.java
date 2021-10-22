@@ -15,10 +15,7 @@
  */
 package kr.or.kira.safe.prfomnc.admin.main.web;
 
-import java.text.DecimalFormat;
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
@@ -33,6 +30,7 @@ import org.springframework.web.servlet.ModelAndView;
 import egovframework.rte.fdl.property.EgovPropertyService;
 import egovframework.rte.psl.dataaccess.util.EgovMap;
 import kr.or.kira.safe.prfomnc.admin.main.service.AdminMainService;
+import kr.or.kira.safe.prfomnc.cmmn.utl.EgovSessionCookieUtil;
 
 /**
  * @Class Name : AdminMainController.java
@@ -84,11 +82,12 @@ public class AdminMainController {
 	 * @throws Exception
 	 */
 	@RequestMapping(value = "/admin/login/operatorExec.ajax")
-    public ModelAndView operatorExec(@RequestParam HashMap<String , String> paramMap) throws Exception {
+    public ModelAndView operatorExec(@RequestParam HashMap<String , String> paramMap, HttpServletRequest request) throws Exception {
         
 		System.out.println("paramMap to String :::::::: " + paramMap.toString());
 		
 		int		kppMembExstCnt	=	0;
+		String	loginSuccAt		=	"N";
 		EgovMap kppMembInfo 	= 	new EgovMap();
 		
 		//관리자 계정정보 존재여부 확인
@@ -98,12 +97,19 @@ public class AdminMainController {
 		if(kppMembExstCnt > 0) {
 			//관리자 정보 조회
 			kppMembInfo = adminMainService.selectKppIntraOpeMembInfo(paramMap);
-			System.out.println("kppMembInfo to String :::::" + kppMembInfo.toString());
-			
+			// 세션 정보 저장
+			EgovSessionCookieUtil.setSessionAttribute(request, "kppMembInfo", kppMembInfo);
+			loginSuccAt	=	"Y";
+			// 세션 정보 출력 (모든 세션 정보 표시)
+			//logger.info("Session Infos : " + EgovSessionCookieUtil.getSessionValuesString(request));
+			// 특정 세션 정보 취득
+			//String userId = (String)EgovSessionCookieUtil.getSessionAttribute(request, "USER_ID");
+		}else {
+			loginSuccAt	=	"N";
 		}
 		
         HashMap hashMap = new HashMap();
-        //hashMap.put("collectHistList", collectHistList);
+        hashMap.put("loginSuccAt", loginSuccAt);
         
         ModelAndView modelAndView = new ModelAndView("jsonView",hashMap);
         return modelAndView;
