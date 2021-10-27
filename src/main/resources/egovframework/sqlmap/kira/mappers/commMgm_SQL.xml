@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="kr.or.kira.safe.prfomnc.cmmn.service.impl.CommMgmMapper">
+	
+	
+	<!-- 공통코드 조회처리 -->
+	<select id="selectCommCdMgmInfo" parameterType="string" resultType="egovMap">
+		<![CDATA[
+		SELECT 
+			LGRP_CD
+			,SGRP_CD
+			,CD_NM
+			,CD_DESC
+			,APPLY_STRT_DT
+			,APPLY_EXP_DT
+			,SORT_ORDR
+			,UPPER_SGRP_CD
+			,UPPER_APPLY_STRT_DT
+			,USE_AT
+			,FIRST_WRTR_ID
+			,FIRST_CRTN_DT
+			,LAST_UPDUSR_ID
+			,LAST_UPDT_DT
+		FROM 
+			CMP_COMM_CD_MGM
+		WHERE
+			USE_AT				=		'Y'
+		AND
+			LGRP_CD				=		#{lgrpCd}
+		AND
+			DATE_FORMAT(SYSDATE(), '%Y%m%d')	BETWEEN		APPLY_STRT_DT		AND		APPLY_EXP_DT
+		]]>			
+	</select>
+	
+</mapper>

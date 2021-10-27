@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package kr.or.kira.safe.prfomnc.admin.main.service.impl;
+package kr.or.kira.safe.prfomnc.admin.chkLstMgm.service.impl;
 
 import java.util.HashMap;
 import java.util.List;
@@ -39,37 +39,29 @@ import egovframework.rte.psl.dataaccess.util.EgovMap;
  *
  * </pre>
  */
-@Mapper("adminMainMapper")
-public interface AdminMainMapper {
+@Mapper("chkLstMgmMapper")
+public interface ChkLstMgmMapper {
 	
 	/**
-	 * 관리자 계정정보 존재여부 확인
+	 * 한국건축규정 체크리스트 항목관리 등록처리
 	 * @param paramMap
 	 * @return
 	 */
-	int selectKppIntraOpeMembExstCnt(HashMap<String, String> paramMap);
+	int insertKppLawordMgmExec(HashMap paramMap);
 	
 	/**
-	 * 관리자 정보 조회
+	 * 한국건축규정 체크리스트 항목관리 목록조회
 	 * @param paramMap
 	 * @return
 	 */
-	EgovMap selectKppIntraOpeMembInfo(HashMap<String, String> paramMap);
+	List<?> selectKppLawordMgmListInfo(HashMap paramMap);
 	
 	/**
-	 * 관리자 계정 아이디 존재여부 확인
+	 * 한국건축규정 체크리스트 항목관리 상세조회
 	 * @param paramMap
 	 * @return
 	 */
-	int selectKppIntraOpeMembDupCnt(HashMap<String, String> paramMap);
-	
-	/**
-	 * 관리자 회원가입 처리
-	 * @param paramMap
-	 * @return
-	 */
-	int insertKppIntraOpeMembExec(HashMap<String, String> paramMap);
-
+	EgovMap selectKppLawordMgmInfo(HashMap paramMap);
 
 	 
 

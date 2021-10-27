@@ -19,7 +19,7 @@
     
     <!-- admin Frame -->
     <definition name="adminFrame-tiles"        	template="/WEB-INF/tiles/adminTilesLayout.jsp">
-        <put-attribute name="loadFile"        	value="/WEB-INF/tiles/inc/loadFile.jsp" />
+        <put-attribute name="loadFile"        	value="/WEB-INF/tiles/inc/adminLoadFile.jsp" />
     	<put-attribute name="header"           	value="/WEB-INF/tiles/inc/adminHeader.jsp" />
         <put-attribute name="body"           	value=""/>
         <put-attribute name="footer"        	value="/WEB-INF/tiles/inc/adminFooter.jsp" />

@@ -12,7 +12,6 @@
 <link rel="stylesheet" 		href="/css/kira/cmmn/bootstrap/bootstrap-theme.min.css">
 
 <!-- test.css -->
-<link rel="stylesheet" 		href="/css/kira/cmmn/test.css">
 <link rel="stylesheet" 		href="/css/kira/admin/admin.css">
 
 <!-- Jqeury -->

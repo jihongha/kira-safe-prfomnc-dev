@@ -13,16 +13,14 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package kr.or.kira.safe.prfomnc.admin.main.service.impl;
+package kr.or.kira.safe.prfomnc.admin.board.service.impl;
 
-import java.util.HashMap;
 import java.util.List;
 
 import egovframework.example.sample.service.SampleDefaultVO;
 import egovframework.example.sample.service.SampleVO;
 
 import egovframework.rte.psl.dataaccess.mapper.Mapper;
-import egovframework.rte.psl.dataaccess.util.EgovMap;
 
 /**
  * userMain에 관한 데이터처리 매퍼 클래스
@@ -39,37 +37,8 @@ import egovframework.rte.psl.dataaccess.util.EgovMap;
  *
  * </pre>
  */
-@Mapper("adminMainMapper")
-public interface AdminMainMapper {
-	
-	/**
-	 * 관리자 계정정보 존재여부 확인
-	 * @param paramMap
-	 * @return
-	 */
-	int selectKppIntraOpeMembExstCnt(HashMap<String, String> paramMap);
-	
-	/**
-	 * 관리자 정보 조회
-	 * @param paramMap
-	 * @return
-	 */
-	EgovMap selectKppIntraOpeMembInfo(HashMap<String, String> paramMap);
-	
-	/**
-	 * 관리자 계정 아이디 존재여부 확인
-	 * @param paramMap
-	 * @return
-	 */
-	int selectKppIntraOpeMembDupCnt(HashMap<String, String> paramMap);
-	
-	/**
-	 * 관리자 회원가입 처리
-	 * @param paramMap
-	 * @return
-	 */
-	int insertKppIntraOpeMembExec(HashMap<String, String> paramMap);
-
+@Mapper("adminBoardMapper")
+public interface AdminBoardMapper {
 
 	 
 

@@ -76,6 +76,22 @@ public class AdminMainServiceImpl extends EgovAbstractServiceImpl implements Adm
 	public EgovMap selectKppIntraOpeMembInfo(HashMap<String, String> paramMap) throws Exception {
 		return adminMainMapper.selectKppIntraOpeMembInfo(paramMap);
 	}
+	
+	/**
+	 * 관리자 계정 아이디 존재여부 확인
+	 */
+	@Override
+	public int selectKppIntraOpeMembDupCnt(HashMap<String, String> paramMap) throws Exception {
+		return adminMainMapper.selectKppIntraOpeMembDupCnt(paramMap);
+	}
+	
+	/**
+	 * 관리자 회원가입 처리
+	 */
+	@Override
+	public int insertKppIntraOpeMembExec(HashMap<String, String> paramMap) throws Exception {
+		return adminMainMapper.insertKppIntraOpeMembExec(paramMap);
+	}
 
 
 

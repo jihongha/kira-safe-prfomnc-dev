@@ -13,11 +13,9 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package kr.or.kira.safe.prfomnc.admin.main.service;
+package kr.or.kira.safe.prfomnc.cmmn.service;
 
-import java.util.HashMap;
-
-import egovframework.rte.psl.dataaccess.util.EgovMap;
+import java.util.List;
 
 /**
  * @Class Name : UserMainService.java
@@ -35,38 +33,14 @@ import egovframework.rte.psl.dataaccess.util.EgovMap;
  *
  *  Copyright (C) by MOPAS All right reserved.
  */
-public interface AdminMainService {
+public interface CommMgmService {
 	
 	/**
-	 * 관리자 계정정보 존재여부 확인
-	 * @param paramMap
+	 * 공통코드 조회
+	 * @param lgrpCd
 	 * @return
 	 */
-	int selectKppIntraOpeMembExstCnt(HashMap<String, String> paramMap) throws Exception;
-	
-	/**
-	 * 관리자 정보 조회
-	 * @param paramMap
-	 * @return
-	 */
-	EgovMap selectKppIntraOpeMembInfo(HashMap<String, String> paramMap) throws Exception;
-	
-	/**
-	 * 관리자 계정 아이디 존재여부 확인
-	 * @param paramMap
-	 * @return
-	 * @throws Exception
-	 */
-	int selectKppIntraOpeMembDupCnt(HashMap<String, String> paramMap) throws Exception;
-	
-	/**
-	 * 관리자 회원가입 처리
-	 * @param paramMap
-	 * @return
-	 * @throws Exception
-	 */
-	int insertKppIntraOpeMembExec(HashMap<String, String> paramMap) throws Exception;
-
+	List<?> selectCommCdMgmInfo(String lgrpCd) throws Exception;
 
 	 
 }
