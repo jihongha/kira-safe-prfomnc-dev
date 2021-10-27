@@ -19,7 +19,7 @@ function regBoardFn(){
 	<div class="col-md-8 col-md-offset-2" style="padding-left : 40px; padding-right : 30px; margin-top: 80px;">
           
           <h2 class="sub-header">공지사항   
-          		<button 	onclick="regBoardFn();"	type="button" class="btn btn-success"	style="float : right;">작성</button>
+          		<button 	onclick="regBoardFn();"	type="button" class="btn btn-default"	style="float : right;">작성</button>
           </h2>
           
           <div class="table-responsive">

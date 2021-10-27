@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="kr.or.kira.safe.prfomnc.admin.sysMgm.service.impl.SysMgmMapper">
+	
+	<!-- 시스템관리 사용자관리 목록조회  -->
+	<select id="selectkppIntraMembListInfo" parameterType="hashMap" resultType="egovMap">
+		<![CDATA[
+		SELECT 
+			KPP_INTRA_OPE_MEMB_SEQ_NO
+			,KPP_MEMB_ID
+			,KPP_MEMB_PWD
+			,KPP_MEMB_NM
+			,KPP_DEPT_NM
+			,KPP_SBSCRB_CONFM_AT
+			,USE_AT
+			,FIRST_WRTR_ID
+			,FIRST_CRTN_DT
+			,DATE_FORMAT(FIRST_CRTN_DT, '%Y.%m.%d')	AS		FIRST_CRTN_DATE
+			,LAST_UPDUSR_ID
+			,LAST_UPDT_DT
+		FROM 
+			KPP_INTRA_OPE_MEMB_MGM KIOMM
+		WHERE
+			USE_AT				=		'Y'
+		ORDER BY FIRST_CRTN_DT	DESC
+		]]>
+	</select>
+	
+	
+	<!-- 시스템관리 사용자관리 상세조회 -->
+	<select id="selectKppIntraMembDetViewInfo" parameterType="hashMap" resultType="egovMap">
+		<![CDATA[
+		SELECT 
+			KPP_INTRA_OPE_MEMB_SEQ_NO
+			,KPP_MEMB_ID
+			,KPP_MEMB_PWD
+			,KPP_MEMB_NM
+			,KPP_DEPT_NM
+			,KPP_SBSCRB_CONFM_AT
+			,USE_AT
+			,FIRST_WRTR_ID
+			,FIRST_CRTN_DT
+			,DATE_FORMAT(FIRST_CRTN_DT, '%Y.%m.%d')	AS		FIRST_CRTN_DATE
+			,LAST_UPDUSR_ID
+			,LAST_UPDT_DT
+		FROM 
+			KPP_INTRA_OPE_MEMB_MGM KIOMM
+		WHERE
+			USE_AT						=				'Y'
+		AND
+			KPP_INTRA_OPE_MEMB_SEQ_NO	=				#{kppIntraOpeMembSeqNo}
+		]]>
+	</select>
+	
+	
+	<!-- 시스템관리 사용자 관리 가입승인, 반려처리 -->
+	<update id="saveKppIntraSbscrbUpdtExec"		parameterType="hashMap">
+		<![CDATA[
+		UPDATE	KPP_INTRA_OPE_MEMB_MGM	SET
+			KPP_SBSCRB_CONFM_AT			=				#{kppSbscrbConfmAt}
+		WHERE  
+			USE_AT						=				'Y'
+		AND
+			KPP_INTRA_OPE_MEMB_SEQ_NO	=				#{kppIntraOpeMembSeqNo}
+		]]>		
+	</update>
+	 
+			
+</mapper>

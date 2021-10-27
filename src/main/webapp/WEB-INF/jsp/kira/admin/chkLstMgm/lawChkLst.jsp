@@ -41,7 +41,7 @@ function detLawChkLstInfoFn(lawordSeqNo){
 	<div class="col-md-8 col-md-offset-2" style="padding-left : 40px; padding-right : 30px; margin-top: 80px;">
           
           <h3 class="sub-header">한국건축규정 체크리스트 관리   
-          		<button 	onclick="regLawChkLstFn();"	type="button" class="btn btn-success"	style="float : right;">등록</button>
+          		<button 	onclick="regLawChkLstFn();"	type="button" class="btn btn-default"	style="float : right;">등록</button>
           </h3>
           
           <div class="table-responsive">
