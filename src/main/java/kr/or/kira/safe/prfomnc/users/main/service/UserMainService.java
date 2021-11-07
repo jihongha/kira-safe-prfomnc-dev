@@ -15,6 +15,8 @@
  */
 package kr.or.kira.safe.prfomnc.users.main.service;
 
+import java.util.HashMap;
+
 /**
  * @Class Name : UserMainService.java
  * @Description : UserMainService Class
@@ -24,8 +26,8 @@ package kr.or.kira.safe.prfomnc.users.main.service;
  * @ ---------   ---------   -------------------------------
  * @ 2021.10.12           최초생성
  *
- * @author 하지홍
- * @since 2021. 10.12
+ * @author 이승연
+ * @since 2021. 11.01
  * @version 1.0
  * @see
  *
@@ -33,5 +35,22 @@ package kr.or.kira.safe.prfomnc.users.main.service;
  */
 public interface UserMainService {
 
-	 
+	// 아이디 중복 체크
+	HashMap<String, String> selectBppMembIdNotExists(HashMap<String, String> paramMap);
+	
+	// 로그인 처리
+	HashMap<String, String> selectBppMembMgmExists(HashMap<String, String> paramMap);
+	
+	// 회원가입 처리
+	HashMap<String, String> insertBppMembMgm(HashMap<String, String> paramMap);
+	
+	// 아이디 찾기 처리
+	HashMap<String, String> selectBppMembId(HashMap<String, String> paramMap);
+	
+	// 아이디 찾기 처리
+	HashMap<String, String> selectBppMembPwd(HashMap<String, String> paramMap);
+	
+	// 비밀번호 초기화 처리
+	HashMap<String, String> updateBppMembPwd(HashMap<String, String> paramMap);
+	
 }

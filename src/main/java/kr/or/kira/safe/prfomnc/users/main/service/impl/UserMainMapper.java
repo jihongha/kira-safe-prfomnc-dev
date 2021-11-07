@@ -15,12 +15,14 @@
  */
 package kr.or.kira.safe.prfomnc.users.main.service.impl;
 
+import java.util.HashMap;
 import java.util.List;
 
 import egovframework.example.sample.service.SampleDefaultVO;
 import egovframework.example.sample.service.SampleVO;
 
 import egovframework.rte.psl.dataaccess.mapper.Mapper;
+import egovframework.rte.psl.dataaccess.util.EgovMap;
 
 /**
  * userMain에 관한 데이터처리 매퍼 클래스
@@ -40,6 +42,21 @@ import egovframework.rte.psl.dataaccess.mapper.Mapper;
 @Mapper("userMainMapper")
 public interface UserMainMapper {
 
-	 
+	// 아이디 중복 체크
+	int selectBppMembIdNotExists(HashMap<String, String> paramMap);
+	
+	// 로그인 처리
+	EgovMap selectBppMembMgmExists(HashMap<String, String> paramMap);
 
+	// 회원가입 처리
+	int insertBppMembMgm(HashMap<String, String> paramMap);
+	
+	// 아이디 찾기 처리
+	EgovMap selectBppMembId(HashMap<String, String> paramMap);
+	
+	// 비밀번호 찾기 처리
+	EgovMap selectBppMembPwd(HashMap<String, String> paramMap);
+	
+	// 비밀번호 초기화 처리
+	int updateBppMembPwd(HashMap<String, String> paramMap);
 }

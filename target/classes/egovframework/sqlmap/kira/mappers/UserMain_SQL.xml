@@ -2,4 +2,133 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="kr.or.kira.safe.prfomnc.users.main.service.impl.UserMainMapper">
 
+	<!-- 아이디 중복체크 -->
+	<select id="selectBppMembIdNotExists" parameterType="hashMap" resultType="int">
+		SELECT
+			COUNT(*)
+		FROM BPP_MEMB_MGM
+		WHERE BPP_MEMB_ID = #{bppMembId}
+	</select>
+	
+	<!-- 회원가입 -->
+	<insert id="insertBppMembMgm" parameterType="hashMap">
+		<selectKey keyProperty="bppMembSeqNo" resultType="int" order="BEFORE">
+			SELECT IFNULL(MAX(BPP_MEMB_SEQ_NO), 0) + 1 FROM BPP_MEMB_MGM
+		</selectKey>
+		
+		INSERT INTO BPP_MEMB_MGM (
+			BPP_MEMB_SEQ_NO,
+			BPP_MEMB_ID,
+			BPP_MEMB_NM,
+			BPP_MEMB_PWD,
+			BPP_MEMB_TY,
+			PWD_CHANG_QUES_CD,
+			PWD_CHANG_ANS_INFO,
+			BPP_MEMB_BRTHDY,
+			BPP_MEMB_EMAIL_ADRES,
+			BPP_MEMB_SBSCRB_DT,
+			<if test='chckerChrgSigunguCd != null'>
+				CHCKER_CHRG_SIGUNGU_CD,
+			</if>
+			<if test='bppMembTy == "chcker"'>
+				CHCKER_SBSCRB_CONFM_AT,
+			</if>
+			USE_STPLAT_AGRE_AT,
+			INDV_INFO_AGRE_AT,
+			USE_AT,
+			FIRST_WRTR_ID,
+			FIRST_CRTN_DT,
+			LAST_UPDUSR_ID,
+			LAST_UPDT_DT
+		) VALUES (
+			#{bppMembSeqNo},
+			#{bppMembId},
+			#{bppMembNm},
+			#{bppMembPwd},
+			#{bppMembTy},
+			#{pwdChangQuesCd},
+			#{pwdChangAnsInfo},
+			#{bppMembBrthdy},
+			#{bppMembEmailAdres},
+			DATE_FORMAT(NOW(), '%Y%m%d%H%i%s'),
+			<if test='chckerChrgSigunguCd != null'>
+				#{chckerChrgSigunguCd},
+			</if>
+			<if test='bppMembTy == "chcker"'>
+				'0',
+			</if>
+			#{useStplatAgreAt},
+			#{indvInfoAgreAt},
+			#{useAt},
+			DATE_FORMAT(NOW(), '%Y%m%d%H%i%s'),
+			#{loginId},
+			DATE_FORMAT(NOW(), '%Y%m%d%H%i%s'),
+			#{loginId}
+		)
+	</insert>
+	
+	<!-- 로그인 -->
+	<select id="selectBppMembMgmExists" parameterType="hashMap" resultType="egovMap">
+		SELECT
+			BPP_MEMB_ID,
+			BPP_MEMB_NM,
+			BPP_MEMB_TY,
+			CHCKER_SBSCRB_CONFM_AT,
+			USE_AT
+		FROM BPP_MEMB_MGM
+		WHERE
+			BPP_MEMB_ID = #{bppMembId}
+			AND BPP_MEMB_PWD = #{bppMembPwd}
+	</select>
+	
+	<!-- 아이디 찾기 -->
+	<select id="selectBppMembId" parameterType="hashMap" resultType="egovMap">
+		SELECT
+			BPP_MEMB_ID,
+			USE_AT
+		FROM BPP_MEMB_MGM
+		WHERE
+			BPP_MEMB_NM = #{bppMembNm}
+			AND BPP_MEMB_BRTHDY = #{bppMembBrthdy}
+			AND BPP_MEMB_EMAIL_ADRES = #{bppMembEmailAdres}
+	</select>
+	
+	<!-- 비밀번호 찾기 -->
+	<select id="selectBppMembPwd" parameterType="hashMap" resultType="egovMap">
+		SELECT
+			BPP_MEMB_ID,
+			USE_AT
+		FROM BPP_MEMB_MGM
+		WHERE
+			BPP_MEMB_ID = #{bppMembId}
+			AND BPP_MEMB_NM = #{bppMembNm}
+			AND BPP_MEMB_EMAIL_ADRES = #{bppMembEmailAdres}
+			AND PWD_CHANG_QUES_CD = #{pwdChangQuesCd}
+			AND PWD_CHANG_ANS_INFO = #{pwdChangAnsInfo}
+	</select>
+	
+	<!-- 비밀번호 초기화 -->
+	<update id="updateBppMembPwd" parameterType="hashMap">
+		UPDATE
+			BPP_MEMB_MGM
+		SET
+			BPP_MEMB_PWD = #{bppMembPwd},
+			LAST_UPDUSR_ID = DATE_FORMAT(NOW(), '%Y%m%d%H%i%s'),
+			LAST_UPDT_DT = #{bppMembId}
+		WHERE
+			BPP_MEMB_ID = #{bppMembId}
+	</update>
+	
+	<!-- 비밀번호 찾기 실패 횟수(기준은 아이디만 맞으면?)  -->
+	<update id="update">
+		UPDATE BPP_MEMB_MGM
+		SET
+			
+			PWD_FAILR_CNT = PWD_FAILR_CNT + 1,
+			PWD_FAILR_DT = DATE_FORMAT(NOW(), '%Y%m%d%H%i%s')
+		WHERE
+			BPP_MEMB_ID = #{bppMembId}
+	</update>
+	
+
 </mapper>
