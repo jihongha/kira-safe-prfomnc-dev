@@ -1,0 +1,238 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="kr.or.kira.safe.prfomnc.users.board.service.impl.UserBoardMapper">
+	
+	<!-- 생성 -->
+	<!-- 공통 게시글 생성 -->
+	<insert id="insertBppCmmnBoard" parameterType="hashMap">
+		<selectKey keyProperty="bppCmmnBoardSeqNo" resultType="int" order="BEFORE">
+			SELECT IFNULL(MAX(BPP_CMMN_BOARD_SEQ_NO), 0) + 1 FROM BPP_CMMN_BOARD_MGM
+		</selectKey>
+	
+		INSERT INTO BPP_CMMN_BOARD_MGM (
+			BPP_CMMN_BOARD_SEQ_NO,
+			BPP_CMMN_BOARD_FNTP,
+			BPP_CMMN_BOARD_SJ,
+			BPP_CMMN_BOARD_CN,
+			<if test='bppCmmnBoardAnswer != null'>
+				BPP_CMMN_BOARD_ANSWER,
+			</if>
+			<if test='popupExpsrBgnde != null'>
+				POPUP_EXPSR_BGNDE,
+			</if>
+			<if test='popupExpsrEndde != null'>
+				POPUP_EXPSR_ENDDE,
+			</if>
+			<if test='popupExpsrAt != null'>
+				POPUP_EXPSR_AT,
+			</if>
+			<if test='boardAnswerComptAt != null'>
+				BOARD_ANSWER_COMPT_AT,
+			</if>
+			<if test='boardQuestOthbcAt != null'>
+				BOARD_QUEST_OTHBC_AT,
+			</if>
+			FILE_GRP_ID,
+			USE_AT,
+			FIRST_CRTN_DT,
+			FIRST_WRTR_ID,
+			LAST_UPDT_DT,
+			LAST_UPDUSR_ID
+		) VALUES (
+			#{bppCmmnBoardSeqNo},
+			#{bppCmmnBoardFntp},
+			#{bppCmmnBoardSj}, 
+			#{bppCmmnBoardCn},
+			<if test='bppCmmnBoardAnswer != null'>
+				#{bppCmmnBoardAnswer},
+			</if>
+			<if test='popupExpsrBgnde != null'>
+				#{popupExpsrBgnde},
+			</if>
+			<if test='popupExpsrEndde != null'>
+				#{popupExpsrEndde},
+			</if>
+			<if test='popupExpsrAt != null'>
+				#{popupExpsrAt},
+			</if>
+			<if test='boardAnswerComptAt != null'>
+				#{boardAnswerComptAt},
+			</if>
+			<if test='boardQuestOthbcAt != null'>
+				#{boardQuestOthbcAt},
+			</if>
+			#{fileGrpId},
+			#{useAt},
+			DATE_FORMAT(NOW(), '%Y%m%d%H%i%s'),
+			#{loginId},
+			DATE_FORMAT(NOW(), '%Y%m%d%H%i%s'),
+			#{loginId}
+		)
+	</insert>
+	
+	<!-- 질의응답 게시글 생성(사용자질문-관리자답변 기능) -->
+	<insert id="insertBppCmmnBoardQna" parameterType="hashMap">
+		<selectKey keyProperty="bppCmmnBoardSeqNo" resultType="int" order="BEFORE">
+			SELECT IFNULL(MAX(BPP_CMMN_BOARD_SEQ_NO), 0) + 1 FROM BPP_CMMN_BOARD_MGM
+		</selectKey>
+	
+		INSERT INTO BPP_CMMN_BOARD_MGM (
+			BPP_CMMN_BOARD_SEQ_NO,
+			BPP_CMMN_BOARD_FNTP,
+			BPP_CMMN_BOARD_SJ,
+			BPP_CMMN_BOARD_CN,
+			FILE_GRP_ID,
+			POPUP_EXPSR_AT,
+			BOARD_ANSWER_COMPT_AT,
+			BOARD_QUEST_OTHBC_AT,
+			USE_AT,
+			FIRST_CRTN_DT,
+			FIRST_WRTR_ID,
+			LAST_UPDT_DT,
+			LAST_UPDUSR_ID
+		) VALUES (
+			#{bppCmmnBoardSeqNo},
+			#{bppCmmnBoardFntp},
+			#{bppCmmnBoardSj}, 
+			#{bppCmmnBoardCn},
+			#{fileGrpId},
+			#{popupExpsrAt},
+			#{boardAnswerComptAt},
+			#{boardQuestOthbcAt},
+			#{useAt},
+			DATE_FORMAT(NOW(), '%Y%m%d%H%i%s'),
+			#{loginId},
+			DATE_FORMAT(NOW(), '%Y%m%d%H%i%s'),
+			#{loginId}
+		)
+	</insert>
+	
+	
+	
+	
+	<!-- 조회 -->
+	<!-- 공통 게시글 리스트 조회 -->
+	<select id="selectBppCmmnBoardList" parameterType="hashMap" resultType="egovMap">
+		SELECT
+			*
+		FROM BPP_CMMN_BOARD_MGM
+		WHERE
+			BPP_CMMN_BOARD_FNTP = #{bppCmmnBoardFntp}
+			AND USE_AT = #{useAt}
+	</select>
+	
+	<!-- 공통 게시글 상세 조회 -->
+	<select id="selectBppCmmnBoard" parameterType="hashMap" resultType="egovMap">
+		SELECT 
+			*
+		FROM BPP_CMMN_BOARD_MGM
+		WHERE
+			BPP_CMMN_BOARD_SEQ_NO = #{bppCmmnBoardSeqNo}
+			AND USE_AT = #{useAt}
+	</select>
+	
+	<!-- 공통 게시글 개수 조회 -->
+	<select id="selectBppCmmnBoardCnt" parameterType="hashMap" resultType="int">
+		SELECT 
+			COUNT(*)
+		FROM BPP_CMMN_BOARD_MGM
+		WHERE
+			BPP_CMMN_BOARD_FNTP = #{bppCmmnBoardFntp}
+			AND USE_AT = #{useAt}
+	</select>
+	
+	<!-- 질의응답 게시글 상세 조회(비공개는 본인만) -->
+	<select id="selectBppCmmnBoardQna" parameterType="hashMap" resultType="egovMap">
+		SELECT 
+			*
+		FROM BPP_CMMN_BOARD_MGM
+		WHERE
+			BPP_CMMN_BOARD_SEQ_NO = #{bppCmmnBoardSeqNo}
+			<if test="boardQuestOthbcAt == 0">
+				AND FIRST_WRTR_ID = #{loginId}
+			</if>
+			AND USE_AT = #{useAt}
+	</select>
+	
+	
+	
+	
+	<!-- 수정 -->
+	<!-- 공통 게시글 수정 -->
+	<update id="updateBppCmmnBoard" parameterType="hashMap">
+		UPDATE 
+			BPP_CMMN_BOARD_MGM
+		SET 
+			BPP_CMMN_BOARD_SJ = #{bppCmmnBoardSj},
+			BPP_CMMN_BOARD_CN = #{bppCmmnBoardCn},
+			<if test='fileGrpId != null'>
+				FILE_GRP_ID = #{fileGrpId},
+			</if>
+			<if test='popupExpsrAt != null'>
+				POPUP_EXPSR_AT = #{popupExpsrAt},
+			</if>
+			<if test='popupExpsrBgnde != null'>
+				POPUP_EXPSR_BGNDE = #{popupExpsrBgnde},
+			</if>
+			<if test='popupExpsrEndde != null'>
+				POPUP_EXPSR_ENDDE = #{popupExpsrEndde},
+			</if>
+			<if test='popupExpsrAt != null'>
+				POPUP_EXPSR_AT = #{popupExpsrAt},
+			</if>
+			LAST_UPDT_DT = DATE_FORMAT(NOW(), '%Y%m%d%H%i%s'),
+			LAST_UPDUSR_ID = #{loginId}
+		WHERE 
+			BPP_CMMN_BOARD_SEQ_NO = #{bppCmmnBoardSeqNo}
+			AND USE_AT = '1'
+	</update>
+	
+	<!-- 질의응답 게시글 수정(관리자) -->
+	<update id="updateBppCmmnBoardQna" parameterType="hashMap">
+		UPDATE 
+			BPP_CMMN_BOARD_MGM
+		SET 
+			BPP_CMMN_BOARD_ANSWER = #{bppCmmnBoardAnswer},
+			BOARD_ANSWER_COMPT_AT = #{boardAnswerComptAt},
+			<if test='useAt != null'>
+				USE_AT = #{useAt},
+			</if>
+			LAST_UPDT_DT = DATE_FORMAT(NOW(), '%Y%m%d%H%i%s'),
+			LAST_UPDUSR_ID = #{loginId}
+		WHERE 
+			BPP_CMMN_BOARD_SEQ_NO = #{bppCmmnBoardSeqNo}
+	</update>
+	
+	
+	
+	
+	<!-- 삭제 -->
+	<!-- 공통 게시글 삭제(노출여부만) -->
+	<update id="deleteBppCmmnBoard" parameterType="hashMap">
+		UPDATE 
+			BPP_CMMN_BOARD_MGM
+		SET
+			USE_AT = #{useAt},
+			LAST_UPDT_DT = DATE_FORMAT(NOW(), '%Y%m%d%H%i%s'),
+			LAST_UPDUSR_ID = #{loginId}
+		WHERE
+			BPP_CMMN_BOARD_SEQ_NO = #{bppCmmnBoardSeqNo}
+	</update>
+	
+
+	
+	<!-- 기타 -->
+	<!-- 조회수 카운트 -->
+	<update id="updateBppCmmnBoardRdcnt" parameterType="int">
+		UPDATE
+			BPP_CMMN_BOARD_MGM
+		SET
+			BPP_CMMN_BOARD_RDCNT = BPP_CMMN_BOARD_RDCNT + 1
+		WHERE
+			BPP_CMMN_BOARD_SEQ_NO = #{bppCmmnBoardSeqNo}
+	</update>
+	
+	
+	
+	
+</mapper>

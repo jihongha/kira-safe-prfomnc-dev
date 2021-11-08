@@ -48,10 +48,11 @@
             <li class="dropdown">
               <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">정보 <span class="caret"></span></a>
               <ul class="dropdown-menu" role="menu">
-                <li <%if("notice".equals(subMenuCd) ){ %> class="active" <%} %> ><a href="/admin/board/noticeLst.do">공지사항</a></li>
-                <li <%if("dataRoom".equals(subMenuCd) ){ %> class="active" <%} %>><a href="/admin/board/dataRoomLst.do">공개자료실</a></li>
-                <li <%if("nesDta".equals(subMenuCd) ){ %> class="active" <%} %>><a href="/admin/board/nesDtaLst.do">보도자료</a></li>
-                <li <%if("qna".equals(subMenuCd) ){ %> class="active" <%} %>><a href="/admin/board/qnaLst.do">Q&A</a></li>
+                <li <%if("notice".equals(subMenuCd) ){ %> class="active" <%} %> ><a href="/admin/board/noticeList.do">공지사항</a></li>
+                <li <%if("dataRoom".equals(subMenuCd) ){ %> class="active" <%} %>><a href="/admin/board/dataRoomList.do">공개자료실</a></li>
+                <li <%if("newsData".equals(subMenuCd) ){ %> class="active" <%} %>><a href="/admin/board/newsDataList.do">보도자료</a></li>
+                <li <%if("faq".equals(subMenuCd) ){ %> class="active" <%} %>><a href="/admin/board/faqList.do">Q&A</a></li>
+                <li <%if("qna".equals(subMenuCd) ){ %> class="active" <%} %>><a href="/admin/board/qnaList.do">Q&A</a></li>
               </ul>
             </li>
             

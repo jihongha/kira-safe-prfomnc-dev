@@ -34,16 +34,19 @@
         	%>
 	          <ul class="nav nav-sidebar">
 	            <li <%if("notice".equals(subMenuCd) ){ %> class="active" <%} %>>
-	            	<a href="/user/board/noticeLst.do">공지사항</a>
+	            	<a href="/user/board/noticeList.do">공지사항</a>
 	            </li>
 	            <li <%if("dataRoom".equals(subMenuCd) ){ %> class="active" <%} %>>
-	            	<a href="/user/board/dataRoomLst.do">공개자료실</a>
+	            	<a href="/user/board/dataRoomList.do">공개자료실</a>
 	            </li>
-	            <li <%if("nesDta".equals(subMenuCd) ){ %> class="active" <%} %>>
-	            	<a href="/user/board/nesDtaLst.do">보도자료</a>
+	            <li <%if("newsData".equals(subMenuCd) ){ %> class="active" <%} %>>
+	            	<a href="/user/board/newsDataList.do">보도자료</a>
+	            </li>
+	            <li <%if("faq".equals(subMenuCd) ){ %> class="active" <%} %>>
+	            	<a href="/user/board/faqList.do">FAQ</a>
 	            </li>
 	            <li <%if("qna".equals(subMenuCd) ){ %> class="active" <%} %>>
-	            	<a href="/user/board/qnaLst.do">Q&A</a>
+	            	<a href="/user/board/qnaList.do">Q&A</a>
 	            </li>
 	          </ul>
 	        <%

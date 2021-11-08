@@ -1,15 +1,13 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <!DOCTYPE html>
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>공지사항</title>
+<title>공지사항 전체조회</title>
 
 <script>
-/**
- * 공지사항 등록 버튼 발생이벤트
- */
-function regBoardFn(){
+function goNoticeWrite(){
 	location.href = "/user/board/noticeWrite.do";
 }
 </script>
@@ -18,10 +16,9 @@ function regBoardFn(){
 <body>
 	<div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
           
-          <h2 class="sub-header">공지사항 TEST   
-          		<button 	onclick="regBoardFn();"	type="button" class="btn btn-success"	style="float : right;">작성</button>
+          <h2 class="sub-header">공지사항 전체조회   
+          		<button onclick="goNoticeWrite()" type="button" class="btn btn-success" style="float: right;">작성</button>
           </h2>
-          
           <div class="table-responsive">
             <table class="table table-hover">
             	<colgroup>
@@ -39,14 +36,14 @@ function regBoardFn(){
                 </tr>
               </thead>
               <tbody>
-              	<%for(int i=0 ; i <100; i++){ %>
-                <tr>
-                  <td>1,001</td>
-                  <td>Lorem</td>
-                  <td>ipsum</td>
-                  <td>ipsum</td>
-                </tr>
-                <%} %>
+                <c:forEach items="${resultMap}" var="egovMap">
+	                <tr>
+	                  <td><a href="/user/board/notice.do?bppCmmnBoardSeqNo=${egovMap.bppCmmnBoardSeqNo}">${egovMap.bppCmmnBoardSeqNo}</a></td>
+	                  <td><a href="/user/board/notice.do?bppCmmnBoardSeqNo=${egovMap.bppCmmnBoardSeqNo}">${egovMap.bppCmmnBoardSj}</a></td>
+	                  <td>${egovMap.lastUpdtDt}</td>
+	                  <td>${egovMap.bppCmmnBoardRdcnt}</td>
+	                </tr>
+                </c:forEach>
               </tbody>
             </table>
           </div>

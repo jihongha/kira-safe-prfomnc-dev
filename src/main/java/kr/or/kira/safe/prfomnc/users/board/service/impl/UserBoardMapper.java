@@ -15,12 +15,14 @@
  */
 package kr.or.kira.safe.prfomnc.users.board.service.impl;
 
+import java.util.HashMap;
 import java.util.List;
 
 import egovframework.example.sample.service.SampleDefaultVO;
 import egovframework.example.sample.service.SampleVO;
 
 import egovframework.rte.psl.dataaccess.mapper.Mapper;
+import egovframework.rte.psl.dataaccess.util.EgovMap;
 
 /**
  * userMain에 관한 데이터처리 매퍼 클래스
@@ -39,7 +41,47 @@ import egovframework.rte.psl.dataaccess.mapper.Mapper;
  */
 @Mapper("userBoardMapper")
 public interface UserBoardMapper {
+	
+	// 생성
+	// 공통 게시글 생성
+	int insertBppCmmnBoard(HashMap<String, String> paramMap);
+	
+	// 질의응답 게시글 생성(사용자질문-관리자답변 기능)
+	int insertBppCmmnBoardQna(HashMap<String, String> paramMap);
+	
+	
+	// 조회
+	// 공통 게시글 리스트 조회
+	List<EgovMap> selectBppCmmnBoardList(HashMap<String, String> paramMap);
+	
+	// 공통 게시글 개수 조회
+	int selectBppCmmnBoardCnt(HashMap<String, String> paramMap);
+	
+	// 공통 게시글 상세 조회
+	EgovMap selectBppCmmnBoard(HashMap<String, String> paramMap);
+	
+	// 질의응답 게시글 상세 조회(본인만)
+	EgovMap selectBppCmmnBoardQna(HashMap<String, String> paramMap);
+	
 
-	 
+	// 수정
+	// 공통 게시글 수정
+	int updateBppCmmnBoard(HashMap<String, String> paramMap);
+	
+	// 공통 게시글 수정
+	int updateBppCmmnBoardQna(HashMap<String, String> paramMap);
+	
+	
+	// 삭제
+	// 공통 게시글 삭제(노출여부만)
+	int deleteBppCmmnBoard(HashMap<String, String> paramMap);
+	
+	// 공통 게시글 삭제(일단 보류)
+	int deleteBppCmmnBoard2(HashMap<String, String> paramMap);
+	
+	
+	// 기타
+	// 조회수 올리기
+	void updateBppCmmnBoardRdcnt(int bppCmmnBoardSeqNo);
 
 }
