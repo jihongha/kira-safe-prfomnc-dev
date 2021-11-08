@@ -1,3 +1,4 @@
+<%@ taglib prefix="ui"     uri="http://egovframework.gov/ctl/ui"%>
 <%@page import="egovframework.rte.psl.dataaccess.util.EgovMap"%>
 <%@page import="java.util.List"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
@@ -27,6 +28,15 @@ function detKppIntraOpeMembFn(kppIntraOpeMembSeqNo){
 }
 
 
+
+/* pagination 페이지 링크 function */
+function pageMoveFn(pageNo){
+	$("#pageIndex").val(pageNo);
+	$("#kppIntraMembLstForm").attr("action"	,		"/admin/sysMgm/kppIntraMembLst.do");
+	$("#kppIntraMembLstForm").submit();
+}
+
+
 </script>
 
 </head>
@@ -36,6 +46,8 @@ function detKppIntraOpeMembFn(kppIntraOpeMembSeqNo){
           <h3 class="sub-header">관리자 관리</h3>
           
           <div class="table-responsive">
+          	<form	id="kppIntraMembLstForm"	name="kppIntraMembLstForm"	method="post">
+          	<input type="hidden"	id="pageIndex"		name="pageIndex"		value="${pageIndex}"		/>
             <table class="table table-hover">
             	<colgroup>
             		<col width="10%" />
@@ -96,6 +108,12 @@ function detKppIntraOpeMembFn(kppIntraOpeMembSeqNo){
               	%>	
               </tbody>
             </table>
+            
+            <div id="paging">
+        		<ui:pagination paginationInfo = "${paginationInfo}" type="image" jsFunction="pageMoveFn" />
+        	</div>
+	        </form>
+	        
           </div>
         </div>
       

@@ -34,12 +34,109 @@
 			#{lawordLrgLinkPath}, 
 			'', 
 			'Y', 
-			'SYSTEM', 
+			#{kppMembId}, 
 			DATE_FORMAT(SYSDATE(), '%Y%m%d%H%I%S'), 
-			'SYSTEM', 
+			#{kppMembId},
 			DATE_FORMAT(SYSDATE(), '%Y%m%d%H%I%S')
 		);
 	</insert>
+	
+	
+	
+	<!-- 한국건축규정 맞춤형 체크리스트 항목관리 등록처리 -->
+	<insert id="insertKppLawordFixesChklstMgmExec" parameterType="hashMap">
+		 <selectKey keyProperty="lawordFixesChklstSeqNo" resultType="int" order="BEFORE">
+        	SELECT 
+        		IFNULL(MAX(LAWORD_FIXES_CHKLST_SEQ_NO) + 1, 1) AS LAWORD_FIXES_CHKLST_SEQ_NO
+        	FROM 
+        		KPP_LAWORD_FIXES_CHKLST_MGM
+        	WHERE
+        		USE_AT				=		'Y'
+        	AND	
+        		LAWORD_SEQ_NO		=		#{lawordSeqNo}		
+    	</selectKey>
+    	
+		INSERT INTO KPP_LAWORD_FIXES_CHKLST_MGM
+		(
+			LAWORD_FIXES_CHKLST_SEQ_NO
+			,LAWORD_SEQ_NO
+			,LAWORD_FIXES_CHKLST_TY
+			<if test="lawordFixesChklstCd != null and lawordFixesChklstCd != ''">
+			,LAWORD_FIXES_CHKLST_CD
+			</if>
+			<if test="lawordFixesChklstScope != null and lawordFixesChklstScope != ''">
+			,LAWORD_FIXES_CHKLST_SCOPE
+			</if>
+			<if test="lawordFixesChklstScopeTy != null and lawordFixesChklstScopeTy != ''">
+			,LAWORD_FIXES_CHKLST_SCOPE_TY
+			</if>
+			,USE_AT
+			,FIRST_WRTR_ID
+			,FIRST_CRTN_DT
+			,LAST_UPDUSR_ID
+			,LAST_UPDT_DT
+		)
+		VALUES
+		(
+			#{lawordFixesChklstSeqNo},
+			#{lawordSeqNo},
+			#{lawordFixesChklstTy}, 
+			<if test="lawordFixesChklstCd != null and lawordFixesChklstCd != ''">
+			#{lawordFixesChklstCd},
+			</if>
+			<if test="lawordFixesChklstScope != null and lawordFixesChklstScope != ''">
+			#{lawordFixesChklstScope}, 
+			</if>
+			<if test="lawordFixesChklstScopeTy != null and lawordFixesChklstScopeTy != ''">
+			#{lawordFixesChklstScopeTy},
+			</if> 
+			'Y', 
+			#{kppMembId}, 
+			DATE_FORMAT(SYSDATE(), '%Y%m%d%H%I%S'), 
+			#{kppMembId},
+			DATE_FORMAT(SYSDATE(), '%Y%m%d%H%I%S')
+		);
+	</insert>
+	
+	<!-- 한국건축규정 체크리스트 항목관리 수정처리 -->
+	<update	id="updateKppLawordMgmExec"		parameterType="hashMap">
+		<![CDATA[
+		UPDATE	KPP_LAWORD_MGM	SET
+			LAWORD_TY					=				#{lawordTy}
+			,LAWORD_NM					=				#{lawordNm}
+			,LAWORD_LRG_NM				=				#{lawordLrgNm}
+			,LAWORD_LRG_LINK_PATH		=				#{lawordLrgLinkPath}
+			,FILE_GRP_ID				=				''
+			,LAST_UPDUSR_ID				=				#{kppMembId}
+			,LAST_UPDT_DT				=				DATE_FORMAT(SYSDATE(), '%Y%m%d%H%I%S')
+		WHERE  
+			USE_AT						=				'Y'
+		AND
+			LAWORD_SEQ_NO				=				#{lawordSeqNo}
+		]]>		
+	</update>
+	
+	<!-- 한국건축규정 체크리스트 항목관리 삭제처리 -->
+	<update	id="deleteKppLawordMgmExec"		parameterType="hashMap">
+		<![CDATA[
+		UPDATE	KPP_LAWORD_MGM	SET
+			USE_AT						=				'N'
+			,LAST_UPDUSR_ID				=				#{kppMembId}
+			,LAST_UPDT_DT				=				DATE_FORMAT(SYSDATE(), '%Y%m%d%H%I%S')
+		WHERE  
+			USE_AT						=				'Y'
+		AND
+			LAWORD_SEQ_NO				=				#{lawordSeqNo}
+		]]>		
+	</update>
+	
+	<!-- 한국건축규정 체크리스트 맞춤형 항목관리 삭제처리 -->
+	<delete id="deleteKppLawordFixesChklstMgmExec">
+		DELETE	FROM	
+			KPP_LAWORD_FIXES_CHKLST_MGM
+		WHERE
+			LAWORD_SEQ_NO				=				#{lawordSeqNo}	
+	</delete>
 	
 	<!-- 한국건축규정 체크리스트 항목관리 목록조회 -->
 	<select id="selectKppLawordMgmListInfo" parameterType="hashMap" resultType="egovMap">
@@ -69,8 +166,26 @@
 			,USE_AT
 			,FIRST_WRTR_ID
 			,FIRST_CRTN_DT
+			,DATE_FORMAT(FIRST_CRTN_DT, '%Y.%m.%d')	AS		FIRST_CRTN_DATE
 			,LAST_UPDUSR_ID
 			,LAST_UPDT_DT
+		FROM 
+			KPP_LAWORD_MGM KLM
+		WHERE
+			USE_AT				=		'Y'
+		ORDER BY 
+			FIRST_CRTN_DT	ASC
+		LIMIT #{recordCountPerPage} OFFSET #{firstIndex}	
+		]]>
+		
+	</select>
+	
+	
+	<!-- 한국건축규정 체크리스트 항목관리 목록 개수조회 -->
+	<select id="selectKppLawordMgmListTotCnt" parameterType="hashMap" resultType="int">
+		<![CDATA[
+		SELECT 
+			COUNT(1)
 		FROM 
 			KPP_LAWORD_MGM KLM
 		WHERE
@@ -106,6 +221,7 @@
 			,FILE_GRP_ID
 			,USE_AT
 			,FIRST_WRTR_ID
+			,DATE_FORMAT(FIRST_CRTN_DT, '%Y.%m.%d')	AS		FIRST_CRTN_DATE
 			,FIRST_CRTN_DT
 			,LAST_UPDUSR_ID
 			,LAST_UPDT_DT
@@ -118,4 +234,38 @@
 		]]>
 	</select>
 	
+	
+	<!-- 한국건축규정 맞춤형 체크리스트 항목 조회 -->
+	<select id="selectkppLawordFixesChkLst" parameterType="hashMap" resultType="egovMap">
+		<![CDATA[
+		SELECT 
+			KLFCM.LAWORD_FIXES_CHKLST_SEQ_NO
+			,KLFCM.LAWORD_SEQ_NO
+			,KLFCM.LAWORD_FIXES_CHKLST_TY
+			,KLFCM.LAWORD_FIXES_CHKLST_CD
+			,CCCM.CD_DESC AS LAWORD_FIXES_CHKLST_CD_NM
+			,KLFCM.LAWORD_FIXES_CHKLST_SCOPE
+			,KLFCM.USE_AT
+			,KLFCM.FIRST_WRTR_ID
+			,DATE_FORMAT(KLFCM.FIRST_CRTN_DT, '%Y.%m.%d')	AS		FIRST_CRTN_DATE
+			,KLFCM.FIRST_CRTN_DT
+			,KLFCM.LAST_UPDUSR_ID
+			,KLFCM.LAST_UPDT_DT
+		FROM 
+			KPP_LAWORD_FIXES_CHKLST_MGM KLFCM,
+			CMP_COMM_CD_MGM	CCCM
+		WHERE
+			KLFCM.USE_AT						=		'Y'
+		AND
+			CCCM.USE_AT							=		'Y'
+		AND 
+			DATE_FORMAT(SYSDATE(), '%Y%m%d')	BETWEEN		CCCM.APPLY_STRT_DT		AND		CCCM.APPLY_EXP_DT
+		AND
+			KLFCM.LAWORD_SEQ_NO					=		#{lawordSeqNo}
+		AND 
+			KLFCM.LAWORD_FIXES_CHKLST_TY 		= 		CCCM.LGRP_CD
+		AND 
+			KLFCM.LAWORD_FIXES_CHKLST_CD 		= 		CCCM.SGRP_CD
+		]]>
+	</select>
 </mapper>

@@ -32,4 +32,25 @@
 		]]>			
 	</select>
 	
+	<!-- 검색 자동완성 텍스트별 검색항목 조회 -->
+	<select id="selectcomCdAutoComplList" parameterType="hashMap" resultType="egovMap">
+		<![CDATA[
+		SELECT 
+			LGRP_CD
+			,SGRP_CD
+			,CD_NM
+			,CD_DESC
+		FROM 
+			CMP_COMM_CD_MGM
+		WHERE
+			USE_AT				=		'Y'
+		AND
+			LGRP_CD				=		#{lgrpCd}
+		AND
+			DATE_FORMAT(SYSDATE(), '%Y%m%d')	BETWEEN		APPLY_STRT_DT		AND		APPLY_EXP_DT
+		]]>
+		<if test="searchKeyword != null and searchKeyword != ''">
+		AND	CD_DESC LIKE CONCAT('%' , #{searchKeyword} , '%')
+		</if>
+	</select>
 </mapper>

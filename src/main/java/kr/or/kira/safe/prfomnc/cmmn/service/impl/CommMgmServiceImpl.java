@@ -15,6 +15,7 @@
  */
 package kr.or.kira.safe.prfomnc.cmmn.service.impl;
 
+import java.util.HashMap;
 import java.util.List;
 
 import javax.annotation.Resource;
@@ -58,6 +59,14 @@ public class CommMgmServiceImpl extends EgovAbstractServiceImpl implements CommM
 	@Override
 	public List<?> selectCommCdMgmInfo(String lgrpCd) throws Exception {
 		return commMgmMapper.selectCommCdMgmInfo(lgrpCd);
+	}
+	
+	/**
+	 * 검색 자동완성 텍스트별 검색항목 조회
+	 */
+	@Override
+	public List<?> selectcomCdAutoComplList(HashMap<String, String> paramMap) throws Exception {
+		return commMgmMapper.selectcomCdAutoComplList(paramMap);
 	}
 
 

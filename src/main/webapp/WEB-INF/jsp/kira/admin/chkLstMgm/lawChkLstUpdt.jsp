@@ -6,14 +6,27 @@
 	if(request.getAttribute("commCdKR001Lst") != null){
 		commCdKR001Lst	=	(List)request.getAttribute("commCdKR001Lst");
 	}
+	
+	EgovMap kppLawordMgmInfo	=	new EgovMap();
+	if(request.getAttribute("kppLawordMgmInfo") != null){
+		kppLawordMgmInfo	=	(EgovMap)request.getAttribute("kppLawordMgmInfo");
+	}
+	
+	//한국건축규정 맞춤형 체크리스트 상세항목 목록조회
+	List kppLawordFixesChkLst	=	null;
+	if(request.getAttribute("kppLawordFixesChkLst") != null){
+		kppLawordFixesChkLst	=	(List)request.getAttribute("kppLawordFixesChkLst");
+	}
+	
 %>
 <!DOCTYPE html>
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>한국건축규정 체크리스트 등록</title>
+<title>한국건축규정 체크리스트 수정</title>
 
 <script>
+
 $( document ).ready(function() {
 	//건축물용도
 	$('#searchLawordBildPrpos').autocomplete({
@@ -342,13 +355,12 @@ function removeLawordZone(sgrpCd){
 	$("#lawordZone_span_"+sgrpCd).remove();
 }
 
-
 /**
- * 한국건축규정 맞춤형 체크리스트 등록처리
+ * 한국건축규정 맞춤형 체크리스트 수정처리
  */
-function regKppLawordMgmExec(){
+function updtKppLawordMgmExec(){
 	if(validation()){
-		$("#kppLawordMgmForm").attr("action", "/admin/chkLstMgm/lawChkLstRegistExec.do");
+		$("#kppLawordMgmForm").attr("action", "/admin/chkLstMgm/lawChkLstUpdtExec.do");
 		$("#kppLawordMgmForm").submit();	
 	}else{
 		return false;
@@ -399,6 +411,7 @@ function validation(){
 	return true;
 } 
 
+
 /**
  * 목록으로 이동 버튼 클릭시 발생이벤트
  */
@@ -410,8 +423,9 @@ function  backLawChkLstFn(){
 </head>
 <body>
 	<div class="col-md-8 col-md-offset-2" style="padding-left : 40px; padding-right : 30px; margin-top: 80px;">
-       	<h3 class="sub-header">한국건축규정 체크리스트 등록</h3>
-		<form class="form-horizontal"		id="kppLawordMgmForm"		name="kppLawordMgmForm"		method="post"		onsubmit="return regKppLawordMgmExec();"		>
+       	<h3 class="sub-header">한국건축규정 체크리스트 수정</h3>
+		<form class="form-horizontal"		id="kppLawordMgmForm"		name="kppLawordMgmForm"		method="post"		onsubmit="return updtKppLawordMgmExec();"		>
+			<input type="hidden"		id="lawordSeqNo"		name="lawordSeqNo"		value="<%=kppLawordMgmInfo.get("lawordSeqNo") %>"		/>
 		  <div class="form-group">
 		    <label for="lawordTy" class="col-sm-2 control-label">법령구분</label>
 		    <div class="col-sm-10">
@@ -420,7 +434,7 @@ function  backLawChkLstFn(){
 		    		<%for(int i=0 ; i < commCdKR001Lst.size() ; i++){
 		    			EgovMap commCdMgm = (EgovMap)commCdKR001Lst.get(i);
 		    		%>
-		    		<option	value="<%=(String)commCdMgm.get("sgrpCd")%>"><%=(String)commCdMgm.get("cdDesc")%></option>
+		    		<option	value="<%=(String)commCdMgm.get("sgrpCd")%>"	<%if( commCdMgm.get("sgrpCd").toString().equals( (String)kppLawordMgmInfo.get("lawordTy")) ){ %> selected="selected" <%} %>	><%=(String)commCdMgm.get("cdDesc")%></option>
 		    		<%} %>
 		    	</select>
 		    </div>
@@ -428,25 +442,26 @@ function  backLawChkLstFn(){
 		  <div class="form-group">
 		    <label for="lawordNm" class="col-sm-2 control-label">법령명</label>
 		    <div class="col-sm-10">
-		      <input type="text"  id="lawordNm" 	name="lawordNm"	class="form-control"		placeholder="법령명을 입력하세요"		required>
+		      <input type="text"  id="lawordNm" 	name="lawordNm"	class="form-control"		placeholder="법령명을 입력하세요"		value="<%=(String)kppLawordMgmInfo.get("lawordNm") %>"		required>
 		    </div>
 		  </div>
 		  
 		  <div class="form-group">
 		    <label for="lawordLrgNm" class="col-sm-2 control-label">조문명</label>
 		    <div class="col-sm-10">
-		      <input type="text"  id="lawordLrgNm" 	name="lawordLrgNm"	class="form-control"		placeholder="조문명을 입력하세요"		required>
+		      <input type="text"  id="lawordLrgNm" 	name="lawordLrgNm"	class="form-control"		placeholder="조문명을 입력하세요"		value="<%=(String)kppLawordMgmInfo.get("lawordLrgNm") %>"		required>
 		    </div>
 		  </div>
 		  
 		  <div class="form-group">
 		    <label for="lawordLrgLinkPath" class="col-sm-2 control-label">조문링크명</label>
 		    <div class="col-sm-10">
-		      <input type="text"  id="lawordLrgLinkPath" 	name="lawordLrgLinkPath"	class="form-control"		placeholder="조문링크명을 입력하세요">
+		      <input type="text"  id="lawordLrgLinkPath" 	name="lawordLrgLinkPath"	class="form-control"		placeholder="조문링크명을 입력하세요"		value="<%=(String)kppLawordMgmInfo.get("lawordLrgLinkPath") %>">
 		    </div>
 		  </div>
 		 
-		  <div class="form-group">
+		 
+		 <div class="form-group">
 		    <label for="" class="col-sm-2 control-label">
 		    	건축물용도
 		    </label>
@@ -455,6 +470,24 @@ function  backLawChkLstFn(){
 		    </div>
 		    <!-- 건축물용도 조회 결과 영역 -->
 		    <div id="lawordBildPrposLabel"	class="col-sm-offset-2 col-sm-10">
+		    	
+		    	<%if(kppLawordFixesChkLst != null && kppLawordFixesChkLst.size() > 0){
+		    		for(int i=0 ; i < kppLawordFixesChkLst.size() ; i++){
+		    			EgovMap kppLawordFixesChkInfo = (EgovMap)kppLawordFixesChkLst.get(i);
+		    			//건축물 용도일 경우
+		    			if("KR002".equals( (String)kppLawordFixesChkInfo.get("lawordFixesChklstTy") ) ){
+		    	%>
+				    	<span id='lawordBildPrpos_span_<%=(String)kppLawordFixesChkInfo.get("lawordFixesChklstCd") %>'	class='label label-primary	chkLst-label'	>
+				    		<%=(String)kppLawordFixesChkInfo.get("lawordFixesChklstCdNm") %>
+				    		<span 	onclick="removeLawordBildPrpos('<%=(String)kppLawordFixesChkInfo.get("lawordFixesChklstCd") %>')"	class='glyphicon glyphicon-remove label-remove-btn' aria-hidden='true'></span>
+				    		<input type='hidden'	name='lawordBildPrpos'	value='<%=(String)kppLawordFixesChkInfo.get("lawordFixesChklstCd") %>'	/>
+				    	</span>
+		    	<%
+		    			}
+		    		}
+		    	} 
+		    	%>	
+				
 		    </div>
 		     <!-- 건축물용도 조회 결과 영역 -->
 		  </div>
@@ -470,6 +503,24 @@ function  backLawChkLstFn(){
 		    
 		    <!-- 지역 조회 결과 영역 -->
 		    <div id="lawordAreaLabel"	class="col-sm-offset-2 col-sm-10">
+		    	
+		    	<%if(kppLawordFixesChkLst != null && kppLawordFixesChkLst.size() > 0){
+		    		for(int i=0 ; i < kppLawordFixesChkLst.size() ; i++){
+		    			EgovMap kppLawordFixesChkInfo = (EgovMap)kppLawordFixesChkLst.get(i);
+		    			//지역일 경우
+		    			if("KR003".equals( (String)kppLawordFixesChkInfo.get("lawordFixesChklstTy") ) ){
+		    	%>
+				    	<span id='lawordArea_span_<%=(String)kppLawordFixesChkInfo.get("lawordFixesChklstCd") %>'	class='label label-primary	chkLst-label'	>
+				    		<%=(String)kppLawordFixesChkInfo.get("lawordFixesChklstCdNm") %>
+				    		<span 	onclick="removeLawordArea('<%=(String)kppLawordFixesChkInfo.get("lawordFixesChklstCd") %>')"	class='glyphicon glyphicon-remove label-remove-btn' aria-hidden='true'></span>
+				    		<input type='hidden'	name='lawordArea'	value='<%=(String)kppLawordFixesChkInfo.get("lawordFixesChklstCd") %>'	/>
+				    	</span>
+		    	<%
+		    			}
+		    		}
+		    	} 
+		    	%>	
+		    	
 		    </div>
 		     <!-- 지역 조회 결과 영역 -->
 		  </div>
@@ -484,6 +535,24 @@ function  backLawChkLstFn(){
 		    
 		     <!-- 지역 조회 결과 영역 -->
 		    <div id="lawordDstrcLabel"	class="col-sm-offset-2 col-sm-10">
+		    	
+		    	<%if(kppLawordFixesChkLst != null && kppLawordFixesChkLst.size() > 0){
+		    		for(int i=0 ; i < kppLawordFixesChkLst.size() ; i++){
+		    			EgovMap kppLawordFixesChkInfo = (EgovMap)kppLawordFixesChkLst.get(i);
+		    			//지구일 경우
+		    			if("KR004".equals( (String)kppLawordFixesChkInfo.get("lawordFixesChklstTy") ) ){
+		    	%>
+				    	<span id='lawordDstrc_span_<%=(String)kppLawordFixesChkInfo.get("lawordFixesChklstCd") %>'	class='label label-primary	chkLst-label'	>
+				    		<%=(String)kppLawordFixesChkInfo.get("lawordFixesChklstCdNm") %>
+				    		<span 	onclick="removeLawordDstrc('<%=(String)kppLawordFixesChkInfo.get("lawordFixesChklstCd") %>')"	class='glyphicon glyphicon-remove label-remove-btn' aria-hidden='true'></span>
+				    		<input type='hidden'	name='lawordDstrc'	value='<%=(String)kppLawordFixesChkInfo.get("lawordFixesChklstCd") %>'	/>
+				    	</span>
+		    	<%
+		    			}
+		    		}
+		    	} 
+		    	%>	
+		    
 		    </div>
 		     <!-- 지역 조회 결과 영역 -->
 		  </div>
@@ -498,6 +567,22 @@ function  backLawChkLstFn(){
 		    
 		     <!-- 구역 조회 결과 영역 -->
 		    <div id="lawordZoneLabel"	class="col-sm-offset-2 col-sm-10">
+		    	<%if(kppLawordFixesChkLst != null && kppLawordFixesChkLst.size() > 0){
+		    		for(int i=0 ; i < kppLawordFixesChkLst.size() ; i++){
+		    			EgovMap kppLawordFixesChkInfo = (EgovMap)kppLawordFixesChkLst.get(i);
+		    			//구역일 경우
+		    			if("KR005".equals( (String)kppLawordFixesChkInfo.get("lawordFixesChklstTy") ) ){
+		    	%>
+				    	<span id='lawordZone_span_<%=(String)kppLawordFixesChkInfo.get("lawordFixesChklstCd") %>'	class='label label-primary	chkLst-label'	>
+				    		<%=(String)kppLawordFixesChkInfo.get("lawordFixesChklstCdNm") %>
+				    		<span 	onclick="removeLawordZone('<%=(String)kppLawordFixesChkInfo.get("lawordFixesChklstCd") %>')"	class='glyphicon glyphicon-remove label-remove-btn' aria-hidden='true'></span>
+				    		<input type='hidden'	name='lawordZone'	value='<%=(String)kppLawordFixesChkInfo.get("lawordFixesChklstCd") %>'	/>
+				    	</span>
+		    	<%
+		    			}
+		    		}
+		    	} 
+		    	%>	
 		    </div>
 		     <!-- 구역 조회 결과 영역 -->
 		     
@@ -508,11 +593,26 @@ function  backLawChkLstFn(){
 		    	층수
 		    </label>
 		    <div id=""	class="col-sm-10">
-		      <input type="text"  id="inputLawordFloor" 	name="inputLawordFloor"	class="form-control"		placeholder="층수를 입력하세요"	style="width: 50%; display: inline-block;">
+		    	<%
+		    	String inputLawordFloor 		= 		"";
+		    	String selectLawordFloorTy 		= 		"";	
+		    	if(kppLawordFixesChkLst != null && kppLawordFixesChkLst.size() > 0){
+		    		for(int i=0 ; i < kppLawordFixesChkLst.size() ; i++){
+		    			EgovMap kppLawordFixesChkInfo = (EgovMap)kppLawordFixesChkLst.get(i);
+		    			//층수일 경우
+		    			if("KR006".equals( (String)kppLawordFixesChkInfo.get("lawordFixesChklstTy") ) ){
+		    				inputLawordFloor	=	(String)kppLawordFixesChkInfo.get("lawordFixesChklstScope");
+		    				selectLawordFloorTy	=	(String)kppLawordFixesChkInfo.get("lawordFixesChklstCd");
+		    			}
+		    		}
+		    	} 
+		    	%>	
+		    	
+		      <input type="text"  id="inputLawordFloor" 	name="inputLawordFloor"	class="form-control"		value="<%=inputLawordFloor %>"	placeholder="층수를 입력하세요"	style="width: 50%; display: inline-block;">
 		      <select	id="selectLawordFloorTy"	name="selectLawordFloorTy"	class="form-control"	style="width: 25%; display: inline-block;">
-		      	<option		value="">-선택-</option>
-		      	<option		value="00001">이상</option>
-		      	<option		value="00002">이하</option>
+		      	<option		value=""		<%if( "".equals(selectLawordFloorTy) ){ %>	selected="selected"	<%} %>>-선택-</option>
+		      	<option		value="00001"	<%if( "00001".equals(selectLawordFloorTy) ){ %>	selected="selected"	<%} %>>이상</option>
+		      	<option		value="00002"	<%if( "00002".equals(selectLawordFloorTy) ){ %>	selected="selected"	<%} %>>이하</option>
 		      </select>
 		    </div>
 		  </div>
@@ -522,35 +622,36 @@ function  backLawChkLstFn(){
 		    	연면적(㎡)
 		    </label>
 		    <div id=""	class="col-sm-10">
-		      <input type="text"  id="inputLawordTotar" 	name="inputLawordTotar"	class="form-control"		placeholder="연면적(㎡)을 입력하세요"		style="width: 50%; display: inline-block;">
+		    	<%
+		    	String inputLawordTotar 		= 		"";
+		    	String selectLawordTotarTy 		= 		"";	
+		    	if(kppLawordFixesChkLst != null && kppLawordFixesChkLst.size() > 0){
+		    		for(int i=0 ; i < kppLawordFixesChkLst.size() ; i++){
+		    			EgovMap kppLawordFixesChkInfo = (EgovMap)kppLawordFixesChkLst.get(i);
+		    			//연면적일 경우
+		    			if("KR007".equals( (String)kppLawordFixesChkInfo.get("lawordFixesChklstTy") ) ){
+		    				inputLawordTotar	=	(String)kppLawordFixesChkInfo.get("lawordFixesChklstScope");
+		    				selectLawordTotarTy	=	(String)kppLawordFixesChkInfo.get("lawordFixesChklstCd");
+		    			}
+		    		}
+		    	} 
+		    	%>	
+		    	
+		      <input type="text"  id="inputLawordTotar" 	name="inputLawordTotar"	class="form-control"		value="<%=inputLawordTotar %>"	placeholder="연면적(㎡)을 입력하세요"		style="width: 50%; display: inline-block;">
 		      <select	id="selectLawordTotarTy"	name="selectLawordTotarTy"	class="form-control"	style="width: 25%; display: inline-block;">
-		      	<option		value="">-선택-</option>
-		      	<option		value="00001">이상</option>
-		      	<option		value="00002">이하</option>
+		      	<option		value=""		<%if( "".equals(selectLawordTotarTy) ){ %>	selected="selected"	<%} %>>-선택-</option>
+		      	<option		value="00001"	<%if( "00001".equals(selectLawordTotarTy) ){ %>	selected="selected"	<%} %>>이상</option>
+		      	<option		value="00002"	<%if( "00002".equals(selectLawordTotarTy) ){ %>	selected="selected"	<%} %>>이하</option>
 		      </select>
 		    </div>
 		  </div>
-		  	
+		  
 		  <div class="form-group">
 		    <div class="col-sm-offset-2 col-sm-10">
-		      <button type="submit" class="btn btn-success">등록</button>
+		      <button type="submit" class="btn btn-success">수정</button>
 		      <button type="button" class="btn btn-default"		onclick="backLawChkLstFn();">뒤로</button>
 		    </div>
 		  </div>
-		  
-		  <!-- <div	class="row">
-		  	<div	class="col-md-offset-1 col-md-2"	style="height: 300px; border : 1px solid red; margin-right: 7px; border-radius : 5px;">
-		  	</div>
-		  	<div	class="col-md-2"	style="height: 300px; border : 1px solid red; margin-right: 7px; border-radius : 5px;">
-		  	</div>
-		  	<div	class="col-md-2"	style="height: 300px; border : 1px solid red; margin-right: 7px; border-radius : 5px;">
-		  	</div>
-		  	<div	class="col-md-2"	style="height: 300px; border : 1px solid red; margin-right: 7px; border-radius : 5px;">
-		  	</div>
-		  	<div	class="col-md-2"	style="height: 300px; border : 1px solid red; margin-right: 7px; border-radius : 5px;">
-		  	</div>
-		  	
-		  </div> -->
 		</form>          
     </div>
       

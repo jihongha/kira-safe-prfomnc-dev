@@ -27,6 +27,20 @@
 	</select>
 	
 	
+	<!-- 시스템관리 사용자관리 목록 개수조회  -->
+	<select id="selectkppIntraMembListTotCnt" parameterType="hashMap" resultType="int">
+		<![CDATA[
+		SELECT 
+			COUNT(*)	AS		CNT
+		FROM 
+			KPP_INTRA_OPE_MEMB_MGM KIOMM
+		WHERE
+			USE_AT				=		'Y'
+		ORDER BY FIRST_CRTN_DT	DESC
+		]]>
+	</select>
+	
+	
 	<!-- 시스템관리 사용자관리 상세조회 -->
 	<select id="selectKppIntraMembDetViewInfo" parameterType="hashMap" resultType="egovMap">
 		<![CDATA[

@@ -50,6 +50,13 @@ public interface SysMgmMapper {
 	List<?> selectkppIntraMembListInfo(HashMap paramMap);
 	
 	/**
+	 * 시스템관리 사용자관리 목록 개수조회
+	 * @param paramMap
+	 * @return
+	 */
+	int selectkppIntraMembListTotCnt(HashMap paramMap);
+	
+	/**
 	 * 시스템관리 사용자관리 상세조회
 	 * @param paramMap
 	 * @return
@@ -62,5 +69,7 @@ public interface SysMgmMapper {
 	 * @return
 	 */
 	int saveKppIntraSbscrbUpdtExec(HashMap paramMap);
+	
+	
 
 }

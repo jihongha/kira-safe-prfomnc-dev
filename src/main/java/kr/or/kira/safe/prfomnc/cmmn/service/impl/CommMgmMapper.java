@@ -15,6 +15,7 @@
  */
 package kr.or.kira.safe.prfomnc.cmmn.service.impl;
 
+import java.util.HashMap;
 import java.util.List;
 
 import egovframework.example.sample.service.SampleDefaultVO;
@@ -46,6 +47,13 @@ public interface CommMgmMapper {
 	 * @return
 	 */
 	List<?> selectCommCdMgmInfo(String lgrpCd);
+	
+	/**
+	 * 검색 자동완성 텍스트별 검색항목 조회
+	 * @param paramMap
+	 * @return
+	 */
+	List<?> selectcomCdAutoComplList(HashMap<String, String> paramMap);
 
 	 
 

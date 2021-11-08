@@ -50,6 +50,21 @@ public interface ChkLstMgmMapper {
 	int insertKppLawordMgmExec(HashMap paramMap);
 	
 	/**
+	 * 한국건축규정 체크리스트 항목관리 수정처리
+	 * @param paramMap
+	 * @return
+	 */
+	int updateKppLawordMgmExec(HashMap paramMap);
+	
+	/**
+	 * 한국건축규정 체크리스트 항목관리 삭제처리
+	 * @param paramMap
+	 * @return
+	 */
+	int deleteKppLawordMgmExec(HashMap paramMap);
+	
+	
+	/**
 	 * 한국건축규정 체크리스트 항목관리 목록조회
 	 * @param paramMap
 	 * @return
@@ -57,12 +72,39 @@ public interface ChkLstMgmMapper {
 	List<?> selectKppLawordMgmListInfo(HashMap paramMap);
 	
 	/**
+	 * 한국건축규정 체크리스트 항목관리 목록 개수조회
+	 * @param paramMap
+	 * @return
+	 */
+	int selectKppLawordMgmListTotCnt(HashMap paramMap);
+	
+	/**
 	 * 한국건축규정 체크리스트 항목관리 상세조회
 	 * @param paramMap
 	 * @return
 	 */
 	EgovMap selectKppLawordMgmInfo(HashMap paramMap);
-
+	
+	/**
+	 * 맞춤형 체크리스트 등록처리
+	 * @param paramMap
+	 */
+	void insertKppLawordFixesChklstMgmExec(HashMap paramMap);
+	
+	/**
+	 * 맞춤형 체크리스트 삭제처리
+	 * @param paramMap
+	 */
+	void deleteKppLawordFixesChklstMgmExec(HashMap paramMap);
+	
+	/**
+	 * 한국건축규정 맞춤형 체크리스트 항목 조회
+	 * @param paramMap
+	 * @return
+	 */
+	List<?> selectkppLawordFixesChkLst(HashMap paramMap);
+	
+	
 	 
 
 }

@@ -29,6 +29,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import egovframework.rte.fdl.property.EgovPropertyService;
 import egovframework.rte.psl.dataaccess.util.EgovMap;
+import egovframework.rte.ptl.mvc.tags.ui.pagination.PaginationInfo;
 import kr.or.kira.safe.prfomnc.admin.sysMgm.service.SysMgmService;
 import kr.or.kira.safe.prfomnc.cmmn.service.CommMgmService;
 
@@ -74,9 +75,29 @@ public class SysMgmController {
 	@RequestMapping(value = "/admin/sysMgm/kppIntraMembLst.do")
 	public String kppIntraMembLst(@RequestParam HashMap paramMap, ModelMap model, HttpServletRequest request, HttpServletResponse response ) throws Exception {
 		
+		//pageing setting 
+		PaginationInfo paginationInfo = new PaginationInfo();
+		int pageIndex = 1;
+		if(paramMap.get("pageIndex") != null) {
+			pageIndex = Integer.parseInt( (String)paramMap.get("pageIndex") );
+		}
+		paginationInfo.setCurrentPageNo( pageIndex );
+		paginationInfo.setRecordCountPerPage(propertiesService.getInt("pageUnit"));
+		paginationInfo.setPageSize(propertiesService.getInt("pageSize"));
+		
+		
+		paramMap.put("firstIndex",	paginationInfo.getFirstRecordIndex());
+		paramMap.put("lastIndex",	paginationInfo.getLastRecordIndex());
+		paramMap.put("recordCountPerPage",	paginationInfo.getRecordCountPerPage());
+		//시스템관리 사용자관리 목록 개수조회
+		int totCnt = sysMgmService.selectkppIntraMembListTotCnt(paramMap);
+		paginationInfo.setTotalRecordCount(totCnt);
+		
 		//시스템관리 사용자관리 목록조회
 		List<?> kppIntraMembLst = sysMgmService.selectkppIntraMembListInfo(paramMap);
 		
+		model.addAttribute("pageIndex", pageIndex);
+		model.addAttribute("paginationInfo", paginationInfo);
 		model.addAttribute("kppIntraMembLst", kppIntraMembLst);
 		model.addAttribute("topMenuCd", "sysMgm");
 		model.addAttribute("subMenuCd", "kppIntraMemb");

@@ -15,6 +15,7 @@
  */
 package kr.or.kira.safe.prfomnc.cmmn.service;
 
+import java.util.HashMap;
 import java.util.List;
 
 /**
@@ -41,6 +42,13 @@ public interface CommMgmService {
 	 * @return
 	 */
 	List<?> selectCommCdMgmInfo(String lgrpCd) throws Exception;
+	
+	/**
+	 * 검색 자동완성 텍스트별 검색항목 조회
+	 * @param paramMap
+	 * @return
+	 */
+	List<?> selectcomCdAutoComplList(HashMap<String, String> paramMap) throws Exception;
 
 	 
 }

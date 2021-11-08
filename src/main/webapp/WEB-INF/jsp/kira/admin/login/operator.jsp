@@ -61,7 +61,7 @@ function loginExecFn(){
 </head>
 <body>
 	<div class="col-md-4 col-md-offset-4"	style="margin-top : 10%;">
-        <form 	id="kppLoginForm"		name="kppLoginForm"		class="form-signin"	method="post"	onsubmit="return loginExecFn();">
+        <form 	id="kppLoginForm"		name="kppLoginForm"		action="#"	class="form-signin"	method="post"	>
 	        <h2 class="form-signin-heading">
 	        	관리자 로그인
 	        	<button class="btn btn-success" type="button" 		onclick="regKppMembFn();"	style="float : right;">가입</button>
@@ -76,7 +76,7 @@ function loginExecFn(){
 	        
 	        <div style="margin-top: 15px;"></div>
 	        
-	        <button class="btn btn-lg btn-primary btn-block" type="submit" 	>로그인</button>
+	        <button class="btn btn-lg btn-primary btn-block" type="button"	onclick="loginExecFn();" >로그인</button>
       	</form>  
     </div>
 </body>

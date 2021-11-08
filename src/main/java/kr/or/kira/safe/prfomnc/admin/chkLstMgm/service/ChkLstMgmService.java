@@ -18,6 +18,8 @@ package kr.or.kira.safe.prfomnc.admin.chkLstMgm.service;
 import java.util.HashMap;
 import java.util.List;
 
+import javax.servlet.http.HttpServletRequest;
+
 import egovframework.rte.psl.dataaccess.util.EgovMap;
 
 /**
@@ -41,10 +43,28 @@ public interface ChkLstMgmService {
 	/**
 	 * 한국건축규정 체크리스트 항목관리 등록처리
 	 * @param paramMap
+	 * @param request 
 	 * @return
 	 * @throws Exception
 	 */
-	int insertKppLawordMgmExec(HashMap paramMap) throws Exception;
+	int insertKppLawordMgmExec(HashMap paramMap, HttpServletRequest request) throws Exception;
+	
+	/**
+	 * 한국건축규정 체크리스트 항목관리 수정처리
+	 * @param paramMap
+	 * @param request 
+	 * @return
+	 * @throws Exception
+	 */
+	int updateKppLawordMgmExec(HashMap paramMap, HttpServletRequest request) throws Exception;
+
+	/**
+	 * 한국건축규정 체크리스트 항목관리 삭제처리
+	 * @param paramMap
+	 * @return
+	 * @throws Exception
+	 */
+	int deleteKppLawordMgmExec(HashMap paramMap) throws Exception;
 	
 	/**
 	 * 한국건축규정 체크리스트 항목관리 목록조회
@@ -55,12 +75,33 @@ public interface ChkLstMgmService {
 	List<?> selectKppLawordMgmListInfo(HashMap paramMap) throws Exception;
 	
 	/**
+	 * 한국건축규정 체크리스트 항목관리 목록 개수조회
+	 * @param paramMap
+	 * @return
+	 * @throws Exception
+	 */
+	int selectKppLawordMgmListTotCnt(HashMap paramMap) throws Exception;
+	
+	/**
 	 * 한국건축규정 체크리스트 항목관리 상세조회
 	 * @param paramMap
 	 * @return
 	 * @throws Exception
 	 */
 	EgovMap selectKppLawordMgmInfo(HashMap paramMap) throws Exception;
+	
+	/**
+	 * 한국건축규정 맞춤형 체크리스트 항목 조회
+	 * @param paramMap
+	 * @return
+	 * @throws Exception
+	 */
+	List<?> selectkppLawordFixesChkLst(HashMap paramMap) throws Exception;
 
+	
+	
+	
+	
+	
 	 
 }

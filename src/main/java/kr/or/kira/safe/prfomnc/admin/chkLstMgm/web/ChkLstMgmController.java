@@ -26,12 +26,15 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.ModelAndView;
 
 import egovframework.rte.fdl.property.EgovPropertyService;
 import egovframework.rte.psl.dataaccess.util.EgovMap;
+import egovframework.rte.ptl.mvc.tags.ui.pagination.PaginationInfo;
 import kr.or.kira.safe.prfomnc.admin.board.service.AdminBoardService;
 import kr.or.kira.safe.prfomnc.admin.chkLstMgm.service.ChkLstMgmService;
 import kr.or.kira.safe.prfomnc.cmmn.service.CommMgmService;
+import kr.or.kira.safe.prfomnc.cmmn.utl.EgovSessionCookieUtil;
 
 /**
  * @Class Name : UserBoardController.java
@@ -75,9 +78,29 @@ public class ChkLstMgmController {
 	@RequestMapping(value = "/admin/chkLstMgm/lawChkLst.do")
 	public String lawChkLst(@RequestParam HashMap paramMap, ModelMap model, HttpServletRequest request, HttpServletResponse response ) throws Exception {
 		
+		//pageing setting 
+		PaginationInfo paginationInfo = new PaginationInfo();
+		int pageIndex = 1;
+		if(paramMap.get("pageIndex") != null) {
+			pageIndex = Integer.parseInt( (String)paramMap.get("pageIndex") );
+		}
+		paginationInfo.setCurrentPageNo( pageIndex );
+		paginationInfo.setRecordCountPerPage(propertiesService.getInt("pageUnit"));
+		paginationInfo.setPageSize(propertiesService.getInt("pageSize"));
+		
+		
+		paramMap.put("firstIndex",	paginationInfo.getFirstRecordIndex());
+		paramMap.put("lastIndex",	paginationInfo.getLastRecordIndex());
+		paramMap.put("recordCountPerPage",	paginationInfo.getRecordCountPerPage());
+		int totCnt = chkLstMgmService.selectKppLawordMgmListTotCnt(paramMap);
+		paginationInfo.setTotalRecordCount(totCnt);
+		
+		
 		//한국건축규정 체크리스트 항목관리 목록조회
 		List<?> kppLawordMgmLst = chkLstMgmService.selectKppLawordMgmListInfo(paramMap);
 		
+		model.addAttribute("pageIndex", pageIndex);
+		model.addAttribute("paginationInfo", paginationInfo);
 		model.addAttribute("kppLawordMgmLst", kppLawordMgmLst);
 		model.addAttribute("topMenuCd", "chkLstMgm");
 		model.addAttribute("subMenuCd", "lawChkLst");
@@ -91,8 +114,12 @@ public class ChkLstMgmController {
 	public String lawChkLstDetView(@RequestParam HashMap paramMap, ModelMap model, HttpServletRequest request, HttpServletResponse response ) throws Exception {
 		
 		//한국건축규정 체크리스트 항목관리 상세조회
-		EgovMap kppLawordMgmInfo = chkLstMgmService.selectKppLawordMgmInfo(paramMap);
+		EgovMap kppLawordMgmInfo 		= 	chkLstMgmService.selectKppLawordMgmInfo(paramMap);
 		
+		//한국건축규정 맞춤형 체크리스트 항목 조회
+		List<?> kppLawordFixesChkLst	=	chkLstMgmService.selectkppLawordFixesChkLst(paramMap);
+		
+		model.addAttribute("kppLawordFixesChkLst", kppLawordFixesChkLst);
 		model.addAttribute("kppLawordMgmInfo", kppLawordMgmInfo);
 		model.addAttribute("topMenuCd", "chkLstMgm");
 		model.addAttribute("subMenuCd", "lawChkLst");
@@ -138,18 +165,127 @@ public class ChkLstMgmController {
 	 */
 	@RequestMapping(value = "/admin/chkLstMgm/lawChkLstRegistExec.do")
 	public String lawChkLstRegistExec(@RequestParam HashMap paramMap, ModelMap model, HttpServletRequest request, HttpServletResponse response ) throws Exception {
-		
 		int		registResultCnt			=	0;
+		EgovMap kppMembInfo 	= 	null;
+		kppMembInfo = (EgovMap)EgovSessionCookieUtil.getSessionAttribute(request, "kppMembInfo");
+		paramMap.put("kppMembId", (String)kppMembInfo.get("kppMembId"));
+		
+		System.out.println("paramMap.toString() >>>>> " + paramMap.toString());
 		
 		//한국건축규정 체크리스트 항목관리 등록처리
-		registResultCnt = chkLstMgmService.insertKppLawordMgmExec(paramMap);
+		registResultCnt = chkLstMgmService.insertKppLawordMgmExec(paramMap, request);
 		
 		model.addAttribute("topMenuCd", "chkLstMgm");
 		model.addAttribute("subMenuCd", "lawChkLst");
 		
-		return "forward:/admin/chkLstMgm/lawChkLst.do";
+		return "redirect:/admin/chkLstMgm/lawChkLst.do";
 	}
 	
 	
+	/**
+	 * 한국건축규정 체크리스트 항목관리 수정
+	 * @param paramMap
+	 * @param model
+	 * @param request
+	 * @param response
+	 * @return
+	 * @throws Exception
+	 */
+	@RequestMapping(value = "/admin/chkLstMgm/lawChkLstUpdt.do")
+	public String lawChkLstUpdt(@RequestParam HashMap paramMap, ModelMap model, HttpServletRequest request, HttpServletResponse response ) throws Exception {
+		
+		//공통코드 조회
+		List<?> commCdKR001Lst = commMgmService.selectCommCdMgmInfo("KR001");
+		
+		//한국건축규정 체크리스트 항목관리 상세조회
+		EgovMap kppLawordMgmInfo = chkLstMgmService.selectKppLawordMgmInfo(paramMap);
+		
+		//한국건축규정 맞춤형 체크리스트 항목 조회
+		List<?> kppLawordFixesChkLst	=	chkLstMgmService.selectkppLawordFixesChkLst(paramMap);
+		
+		model.addAttribute("kppLawordFixesChkLst", kppLawordFixesChkLst);
+		model.addAttribute("kppLawordMgmInfo", kppLawordMgmInfo);
+		model.addAttribute("commCdKR001Lst", commCdKR001Lst);
+		model.addAttribute("topMenuCd", "chkLstMgm");
+		model.addAttribute("subMenuCd", "lawChkLst");
+		
+		return "admin/chkLstMgm/lawChkLstUpdt.kppTiles";
+	}	
+	
+	
+	/**
+	 * 한국건축규정 체크리스트 항목관리 수정처리
+	 * @param paramMap
+	 * @param model
+	 * @param request
+	 * @param response
+	 * @return
+	 * @throws Exception
+	 */
+	@RequestMapping(value = "/admin/chkLstMgm/lawChkLstUpdtExec.do")
+	public String lawChkLstUpdtExec(@RequestParam HashMap paramMap, ModelMap model, HttpServletRequest request, HttpServletResponse response ) throws Exception {
+		
+		int		updtResultCnt			=	0;
+		
+		EgovMap kppMembInfo 	= 	null;
+		kppMembInfo = (EgovMap)EgovSessionCookieUtil.getSessionAttribute(request, "kppMembInfo");
+		paramMap.put("kppMembId", (String)kppMembInfo.get("kppMembId"));
+		
+		//한국건축규정 체크리스트 항목관리 수정처리
+		updtResultCnt = chkLstMgmService.updateKppLawordMgmExec(paramMap, request);
+		
+		model.addAttribute("topMenuCd", "chkLstMgm");
+		model.addAttribute("subMenuCd", "lawChkLst");
+		
+		return "redirect:/admin/chkLstMgm/lawChkLst.do";
+	}
+	
+	
+	/**
+	 * 한국건축규정 체크리스트 항목관리 삭제처리
+	 * @param paramMap
+	 * @param model
+	 * @param request
+	 * @param response
+	 * @return
+	 * @throws Exception
+	 */
+	@RequestMapping(value = "/admin/chkLstMgm/lawChkLstDeleteExec.do")
+	public String lawChkLstDeleteExec(@RequestParam HashMap paramMap, ModelMap model, HttpServletRequest request, HttpServletResponse response ) throws Exception {
+		
+		int		deleteResultCnt			=	0;
+		
+		EgovMap kppMembInfo 	= 	null;
+		kppMembInfo = (EgovMap)EgovSessionCookieUtil.getSessionAttribute(request, "kppMembInfo");
+		paramMap.put("kppMembId", (String)kppMembInfo.get("kppMembId"));
+		
+		//한국건축규정 체크리스트 항목관리 삭제처리
+		deleteResultCnt = chkLstMgmService.deleteKppLawordMgmExec(paramMap);
+		
+		model.addAttribute("topMenuCd", "chkLstMgm");
+		model.addAttribute("subMenuCd", "lawChkLst");
+		
+		return "redirect:/admin/chkLstMgm/lawChkLst.do";
+	}
+	
+	
+	
+	/**
+	 * 검색 자동완성 텍스트별 검색항목 조회
+	 * @param paramMap
+	 * @param request
+	 * @return
+	 * @throws Exception
+	 */
+	@RequestMapping(value = "/admin/chkLstMgm/selectComCdAutoComplInfo.ajax")
+    public ModelAndView selectComCdAutoComplInfo(@RequestParam HashMap<String , String> paramMap, HttpServletRequest request) throws Exception {
+		//검색 자동완성 텍스트별 검색항목 조회
+		List<?> comCdAutoComplLst = commMgmService.selectcomCdAutoComplList(paramMap);
+        HashMap hashMap = new HashMap();
+        hashMap.put("comCdAutoComplLst", comCdAutoComplLst);
+        
+        ModelAndView modelAndView = new ModelAndView("jsonView",hashMap);
+        return modelAndView;
+    }
 	 
 }

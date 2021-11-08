@@ -64,6 +64,14 @@ public class SysMgmServiceImpl extends EgovAbstractServiceImpl implements SysMgm
 	}
 	
 	/**
+	 * 시스템관리 사용자관리 목록 개수조회
+	 */
+	@Override
+	public int selectkppIntraMembListTotCnt(HashMap paramMap) throws Exception {
+		return sysMgmMapper.selectkppIntraMembListTotCnt(paramMap) ;
+	}
+	
+	/**
 	 * 시스템관리 사용자관리 상세조회
 	 */
 	@Override
@@ -78,6 +86,5 @@ public class SysMgmServiceImpl extends EgovAbstractServiceImpl implements SysMgm
 	public int saveKppIntraSbscrbUpdtExec(HashMap paramMap) throws Exception {
 		return sysMgmMapper.saveKppIntraSbscrbUpdtExec(paramMap) ;
 	}
-	 
 
 }

@@ -46,6 +46,14 @@ public interface SysMgmService {
 	List<?> selectkppIntraMembListInfo(HashMap paramMap) throws Exception;
 	
 	/**
+	 * 시스템관리 사용자관리 목록 개수조회 
+	 * @param paramMap
+	 * @return
+	 * @throws Exception
+	 */
+	int selectkppIntraMembListTotCnt(HashMap paramMap) throws Exception;
+	
+	/**
 	 * 시스템관리 사용자관리 상세조회
 	 * @param paramMap
 	 * @return
@@ -60,6 +68,8 @@ public interface SysMgmService {
 	 * @throws Exception
 	 */
 	int saveKppIntraSbscrbUpdtExec(HashMap paramMap) throws Exception;
+
+	
 	
 	 
 }

@@ -40,7 +40,7 @@
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
           </button>
-          <a class="navbar-brand" href="/">건축물 안전 및 성능향상(관리자)</a>
+          <a class="navbar-brand" href="/admin/board/noticeLst.do">건축물 안전 및 성능향상(관리자)</a>
         </div>
         <div id="navbar" class="navbar-collapse collapse">
           <ul class="nav navbar-nav">

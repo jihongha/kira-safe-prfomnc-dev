@@ -13,4 +13,34 @@
 	font-weight	:	600; 
 	color 		:	#4374D9;
 }
- 
+
+
+#paging {padding:0 0 0 0; text-align:center; width:100%;}
+#paging ul {display:inline;}
+#paging li {display:inline; list-style-type:none; padding:0 10px 0 10px; font-family: Tahoma; font-size:11px; color: #333333;}
+#paging li.pre10 {padding:0 2px 0 2px;}
+#paging li.pre1 {padding:0 2px 0 2px;}
+#paging li.next10 {padding:0 2px 0 2px;}
+#paging li.next1 {padding:0 2px 0 2px;}
+#paging li.line {background:url(/images/egovframework/example/paging_line.gif) 0 2px no-repeat;}
+#paging li.first {padding:0 5px 0 0;}
+#paging li.last {background:url(/images/egovframework/example/paging_line.gif) 0 2px no-repeat; padding:0 5px 0 0;}
+
+
+.chkLst-label{
+	display: inline-block; 
+	margin: 3px;
+} 
+
+.label-remove-btn{
+	cursor: pointer; 
+	margin-left: 5px; 
+	padding-top: 0.3em; 
+	padding-bottom: 0.3em;
+}
+
+
+.ui-autocomplete {
+    overflow: auto;
+    height: 300px;
+}

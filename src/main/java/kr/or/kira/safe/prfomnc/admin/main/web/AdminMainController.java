@@ -109,7 +109,7 @@ public class AdminMainController {
 				EgovSessionCookieUtil.setSessionAttribute(request, "kppMembInfo", kppMembInfo);
 			}
 			// 세션 정보 출력 (모든 세션 정보 표시)
-			//logger.info("Session Infos : " + EgovSessionCookieUtil.getSessionValuesString(request));
+			System.out.println("Session Infos : " + EgovSessionCookieUtil.getSessionValuesString(request));
 			// 특정 세션 정보 취득
 			//String userId = (String)EgovSessionCookieUtil.getSessionAttribute(request, "USER_ID");
 		}else {
