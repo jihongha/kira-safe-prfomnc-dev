@@ -52,6 +52,11 @@ public class UserMainServiceImpl extends EgovAbstractServiceImpl implements User
 	/** userMainMapper */
 	@Resource(name="userMainMapper")
 	private UserMainMapper userMainMapper;
+	
+	final String USER = "USER";
+	final String CHCKER = "CHCKER";
+	final String YES = "Y";
+	final String NO = "N";
 
 	
 	// 회원가입 시 아이디 중복체크
@@ -62,10 +67,10 @@ public class UserMainServiceImpl extends EgovAbstractServiceImpl implements User
 		int row = userMainMapper.selectBppMembIdNotExists(paramMap);
 		
 		if (row == 0) { // 중복체크라 결과 있으면 안 됨
-			resultMap.put("isSucceeded", "Y");
+			resultMap.put("isSucceeded", YES);
 		}
 		else {
-			resultMap.put("isSucceeded", "N");
+			resultMap.put("isSucceeded", NO);
 		}
 		
 		return resultMap;
@@ -80,10 +85,10 @@ public class UserMainServiceImpl extends EgovAbstractServiceImpl implements User
 		int row = userMainMapper.insertBppMembMgm(paramMap);
 		
 		if (row == 1) {
-			resultMap.put("isSucceeded", "Y");
+			resultMap.put("isSucceeded", YES);
 		}
 		else {
-			resultMap.put("isSucceeded", "N");
+			resultMap.put("isSucceeded", NO);
 		}
 		
 		return resultMap;
@@ -100,7 +105,7 @@ public class UserMainServiceImpl extends EgovAbstractServiceImpl implements User
 			resultMap.putAll(result);
 			return checkUser(resultMap);
 		} else {
-			resultMap.put("isSucceeded", "N");
+			resultMap.put("isSucceeded", NO);
 			resultMap.put("msg", "아이디 또는 비밀번호를 확인해주세요");
 			return resultMap;
 		}
@@ -115,21 +120,21 @@ public class UserMainServiceImpl extends EgovAbstractServiceImpl implements User
 		String chckerSbscrbConfmAt = paramMap.get("chckerSbscrbConfmAt");
 		
 		// 사용여부가 0인 사람 == 탈퇴한 사람
-		if (useAt.equals("0")) {
+		if (useAt.equals(NO)) {
 			resultMap.put("msg", "사용 정지된 아이디입니다.");
-			resultMap.put("isSucceeded", "N");
+			resultMap.put("isSucceeded", NO);
 			return resultMap;
 		}
 		
 		// 검토자인데 승인여부가 0인 사람 == 승인 나지 않은 검토자
-		if (bppMembTy.equals("chcker") && chckerSbscrbConfmAt.equals("0")) {
+		if (bppMembTy.equals(CHCKER) && chckerSbscrbConfmAt.equals(NO)) {
 			resultMap.put("msg", "담당자의 검토 승인이 필요한 아이디입니다.");
-			resultMap.put("isSucceeded", "N");
+			resultMap.put("isSucceeded", NO);
 			return resultMap;
 		}
 		
 		resultMap.putAll(paramMap);
-		resultMap.put("isSucceeded", "Y");
+		resultMap.put("isSucceeded", YES);
 		resultMap.put("msg", "문제없이 정상 로그인!");
 		
 		return resultMap;
@@ -144,10 +149,10 @@ public class UserMainServiceImpl extends EgovAbstractServiceImpl implements User
 		
 		if (result != null) {
 			resultMap.putAll(result);
-			resultMap.put("isSucceeded", "Y");
+			resultMap.put("isSucceeded", YES);
 			resultMap.put("msg", "아이디 찾기 성공");
 		} else {
-			resultMap.put("isSucceeded", "N");
+			resultMap.put("isSucceeded", NO);
 			resultMap.put("msg", "입력하신 정보와 일치하는 회원정보가 존재하지 않습니다.");
 		}
 		
@@ -165,10 +170,10 @@ public class UserMainServiceImpl extends EgovAbstractServiceImpl implements User
 		
 		if (result != null) {
 			resultMap.putAll(result);
-			resultMap.put("isSucceeded", "Y");
+			resultMap.put("isSucceeded", YES);
 			resultMap.put("msg", "비밀번호 찾기 성공");
 		} else {
-			resultMap.put("isSucceeded", "N");
+			resultMap.put("isSucceeded", NO);
 			resultMap.put("msg", "입력하신 정보와 일치하는 회원정보가 존재하지 않습니다.");
 		}
 		
@@ -183,10 +188,10 @@ public class UserMainServiceImpl extends EgovAbstractServiceImpl implements User
 		HashMap<String, String> resultMap = new HashMap<String, String>();
 		
 		if (row == 1) {
-			resultMap.put("isSucceeded", "Y");
+			resultMap.put("isSucceeded", YES);
 			resultMap.put("msg", "비밀번호 초기화 성공");
 		} else {
-			resultMap.put("isSucceeded", "N");
+			resultMap.put("isSucceeded", NO);
 			resultMap.put("msg", "비밀번호 초기화에 실패하였습니다.");
 		}
 		

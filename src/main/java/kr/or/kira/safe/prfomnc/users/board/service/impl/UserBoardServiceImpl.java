@@ -75,7 +75,7 @@ public class UserBoardServiceImpl extends EgovAbstractServiceImpl implements Use
 
 	@Override
 	public HashMap<String, String> insertBppCmmnBoardQna(HashMap<String, String> paramMap) throws Exception {
-		int row = userBoardMapper.insertBppCmmnBoardQna(paramMap);
+		int row = userBoardMapper.insertBppCmmnBoard(paramMap);
 
 		HashMap<String, String> resultMap = new HashMap<String, String>();
 		
@@ -125,7 +125,7 @@ public class UserBoardServiceImpl extends EgovAbstractServiceImpl implements Use
 
 	@Override
 	public HashMap<String, String> selectBppCmmnBoardQna(HashMap<String, String> paramMap) throws Exception {
-		EgovMap result = userBoardMapper.selectBppCmmnBoardQna(paramMap);
+		EgovMap result = userBoardMapper.selectBppCmmnBoard(paramMap);
 		
 		HashMap<String, String> resultMap = new HashMap<String, String>();
 		
@@ -172,10 +172,10 @@ public class UserBoardServiceImpl extends EgovAbstractServiceImpl implements Use
 		if (row > 0) {
 			resultMap.put("bppCmmnBoardSeqNo", paramMap.get("bppCmmnBoardSeqNo"));
 			resultMap.put("isSucceeded", "Y");
-			resultMap.put("msg", "수정 완료");
+			resultMap.put("msg", "질의응답 답변 완료");
 		} else {
 			resultMap.put("isSucceeded", "N");
-			resultMap.put("msg", "수정 실패");
+			resultMap.put("msg", "질의응답 답변 실패");
 		}
 		
 		return resultMap;

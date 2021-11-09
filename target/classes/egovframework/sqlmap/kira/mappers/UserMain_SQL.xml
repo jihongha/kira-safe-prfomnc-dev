@@ -30,7 +30,7 @@
 			<if test='chckerChrgSigunguCd != null'>
 				CHCKER_CHRG_SIGUNGU_CD,
 			</if>
-			<if test='bppMembTy == "chcker"'>
+			<if test='bppMembTy == "CHCKER"'>
 				CHCKER_SBSCRB_CONFM_AT,
 			</if>
 			USE_STPLAT_AGRE_AT,
@@ -54,12 +54,12 @@
 			<if test='chckerChrgSigunguCd != null'>
 				#{chckerChrgSigunguCd},
 			</if>
-			<if test='bppMembTy == "chcker"'>
-				'0',
+			<if test='bppMembTy == "CHCKER"'>
+				'N',
 			</if>
 			#{useStplatAgreAt},
 			#{indvInfoAgreAt},
-			#{useAt},
+			'Y',
 			DATE_FORMAT(NOW(), '%Y%m%d%H%i%s'),
 			#{loginId},
 			DATE_FORMAT(NOW(), '%Y%m%d%H%i%s'),
@@ -105,6 +105,7 @@
 			AND BPP_MEMB_EMAIL_ADRES = #{bppMembEmailAdres}
 			AND PWD_CHANG_QUES_CD = #{pwdChangQuesCd}
 			AND PWD_CHANG_ANS_INFO = #{pwdChangAnsInfo}
+			AND USE_AT = 'Y'
 	</select>
 	
 	<!-- 비밀번호 초기화 -->
@@ -117,13 +118,14 @@
 			LAST_UPDT_DT = #{bppMembId}
 		WHERE
 			BPP_MEMB_ID = #{bppMembId}
+			AND USE_AT = 'Y'
 	</update>
 	
 	<!-- 비밀번호 찾기 실패 횟수(기준은 아이디만 맞으면?)  -->
 	<update id="update">
-		UPDATE BPP_MEMB_MGM
+		UPDATE
+			BPP_MEMB_MGM
 		SET
-			
 			PWD_FAILR_CNT = PWD_FAILR_CNT + 1,
 			PWD_FAILR_DT = DATE_FORMAT(NOW(), '%Y%m%d%H%i%s')
 		WHERE

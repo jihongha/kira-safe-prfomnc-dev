@@ -25,16 +25,6 @@ function deleteBppCmmnBoard(){
 	}
 }
 
-/* $(function() {
- 	var isSucceeded = "${resultMap.isSucceeded}";
-	
-	if (isSucceeded == "Y") {
-		alert("작성자 본인만 열람 가능합니다!");
-		location.href = "/user/board/qnaList.do";
-		//history.go(-1);
-	}
-})
- */
 </script>
 </head>
 <body>
@@ -56,7 +46,18 @@ function deleteBppCmmnBoard(){
 		</tr>
 	</table>
 	<button type="reset" onclick="goQnaList()">목록</button>
-	<button onclick="updateBppCmmnBoard()">수정</button>
-	<button onclick="deleteBppCmmnBoard()">삭제</button>
+	
+	<br><br>
+	<table border="1">
+		<tr>
+			<td>답변</td>
+			<td>${resultMap.bppCmmnBoardAnswer}</td>
+		</tr>
+		<tr>
+			<td>답변일</td>
+			<td>${resultMap.lastUpdtDt}</td>
+		</tr>
+	</table>
+	
 </body>
 </html>

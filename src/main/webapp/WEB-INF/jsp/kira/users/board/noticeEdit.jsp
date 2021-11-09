@@ -73,11 +73,11 @@ function isChecked() {
 	
 	if(check == true) {
 		$(".pickData").attr("disabled", false);
-		$("input:checkbox[id='popupExpsrAt']").val("1");
+		$("input:checkbox[id='popupExpsrAt']").val("Y");
 
 	} else {
 	    $(".pickData").attr("disabled", true);
-		$("input:checkbox[id='popupExpsrAt']").val("0");
+		$("input:checkbox[id='popupExpsrAt']").val("N");
 	}
 }
 

@@ -26,13 +26,15 @@
 			<if test='popupExpsrAt != null'>
 				POPUP_EXPSR_AT,
 			</if>
-			<if test='boardAnswerComptAt != null'>
+			<if test='bppCmmnBoardFntp == "ctgr5"'>
 				BOARD_ANSWER_COMPT_AT,
 			</if>
 			<if test='boardQuestOthbcAt != null'>
 				BOARD_QUEST_OTHBC_AT,
 			</if>
-			FILE_GRP_ID,
+			<if test='fileGrpId != null'>
+				FILE_GRP_ID,
+			</if>
 			USE_AT,
 			FIRST_CRTN_DT,
 			FIRST_WRTR_ID,
@@ -55,51 +57,16 @@
 			<if test='popupExpsrAt != null'>
 				#{popupExpsrAt},
 			</if>
-			<if test='boardAnswerComptAt != null'>
-				#{boardAnswerComptAt},
+			<if test='bppCmmnBoardFntp == "ctgr5"'>
+				'N',
 			</if>
 			<if test='boardQuestOthbcAt != null'>
 				#{boardQuestOthbcAt},
 			</if>
-			#{fileGrpId},
-			#{useAt},
-			DATE_FORMAT(NOW(), '%Y%m%d%H%i%s'),
-			#{loginId},
-			DATE_FORMAT(NOW(), '%Y%m%d%H%i%s'),
-			#{loginId}
-		)
-	</insert>
-	
-	<!-- 질의응답 게시글 생성(사용자질문-관리자답변 기능) -->
-	<insert id="insertBppCmmnBoardQna" parameterType="hashMap">
-		<selectKey keyProperty="bppCmmnBoardSeqNo" resultType="int" order="BEFORE">
-			SELECT IFNULL(MAX(BPP_CMMN_BOARD_SEQ_NO), 0) + 1 FROM BPP_CMMN_BOARD_MGM
-		</selectKey>
-	
-		INSERT INTO BPP_CMMN_BOARD_MGM (
-			BPP_CMMN_BOARD_SEQ_NO,
-			BPP_CMMN_BOARD_FNTP,
-			BPP_CMMN_BOARD_SJ,
-			BPP_CMMN_BOARD_CN,
-			FILE_GRP_ID,
-			POPUP_EXPSR_AT,
-			BOARD_ANSWER_COMPT_AT,
-			BOARD_QUEST_OTHBC_AT,
-			USE_AT,
-			FIRST_CRTN_DT,
-			FIRST_WRTR_ID,
-			LAST_UPDT_DT,
-			LAST_UPDUSR_ID
-		) VALUES (
-			#{bppCmmnBoardSeqNo},
-			#{bppCmmnBoardFntp},
-			#{bppCmmnBoardSj}, 
-			#{bppCmmnBoardCn},
-			#{fileGrpId},
-			#{popupExpsrAt},
-			#{boardAnswerComptAt},
-			#{boardQuestOthbcAt},
-			#{useAt},
+			<if test='fileGrpId != null'>
+				#{fileGrpId},
+			</if>
+			'Y',
 			DATE_FORMAT(NOW(), '%Y%m%d%H%i%s'),
 			#{loginId},
 			DATE_FORMAT(NOW(), '%Y%m%d%H%i%s'),
@@ -118,7 +85,7 @@
 		FROM BPP_CMMN_BOARD_MGM
 		WHERE
 			BPP_CMMN_BOARD_FNTP = #{bppCmmnBoardFntp}
-			AND USE_AT = #{useAt}
+			AND USE_AT = 'Y'
 	</select>
 	
 	<!-- 공통 게시글 상세 조회 -->
@@ -128,7 +95,7 @@
 		FROM BPP_CMMN_BOARD_MGM
 		WHERE
 			BPP_CMMN_BOARD_SEQ_NO = #{bppCmmnBoardSeqNo}
-			AND USE_AT = #{useAt}
+			AND USE_AT = 'Y'
 	</select>
 	
 	<!-- 공통 게시글 개수 조회 -->
@@ -138,7 +105,7 @@
 		FROM BPP_CMMN_BOARD_MGM
 		WHERE
 			BPP_CMMN_BOARD_FNTP = #{bppCmmnBoardFntp}
-			AND USE_AT = #{useAt}
+			AND USE_AT = 'Y'
 	</select>
 	
 	<!-- 질의응답 게시글 상세 조회(비공개는 본인만) -->
@@ -148,10 +115,10 @@
 		FROM BPP_CMMN_BOARD_MGM
 		WHERE
 			BPP_CMMN_BOARD_SEQ_NO = #{bppCmmnBoardSeqNo}
-			<if test="boardQuestOthbcAt == 0">
+			<if test='boardQuestOthbcAt == "N"'>
 				AND FIRST_WRTR_ID = #{loginId}
 			</if>
-			AND USE_AT = #{useAt}
+			AND USE_AT = 'Y'
 	</select>
 	
 	
@@ -184,23 +151,21 @@
 			LAST_UPDUSR_ID = #{loginId}
 		WHERE 
 			BPP_CMMN_BOARD_SEQ_NO = #{bppCmmnBoardSeqNo}
-			AND USE_AT = '1'
+			AND USE_AT = 'Y'
 	</update>
 	
 	<!-- 질의응답 게시글 수정(관리자) -->
 	<update id="updateBppCmmnBoardQna" parameterType="hashMap">
 		UPDATE 
 			BPP_CMMN_BOARD_MGM
-		SET 
+		SET
 			BPP_CMMN_BOARD_ANSWER = #{bppCmmnBoardAnswer},
-			BOARD_ANSWER_COMPT_AT = #{boardAnswerComptAt},
-			<if test='useAt != null'>
-				USE_AT = #{useAt},
-			</if>
+			BOARD_ANSWER_COMPT_AT = 'Y',
 			LAST_UPDT_DT = DATE_FORMAT(NOW(), '%Y%m%d%H%i%s'),
 			LAST_UPDUSR_ID = #{loginId}
 		WHERE 
 			BPP_CMMN_BOARD_SEQ_NO = #{bppCmmnBoardSeqNo}
+			AND USE_AT = 'Y'
 	</update>
 	
 	
@@ -212,11 +177,12 @@
 		UPDATE 
 			BPP_CMMN_BOARD_MGM
 		SET
-			USE_AT = #{useAt},
+			USE_AT = 'N',
 			LAST_UPDT_DT = DATE_FORMAT(NOW(), '%Y%m%d%H%i%s'),
 			LAST_UPDUSR_ID = #{loginId}
 		WHERE
 			BPP_CMMN_BOARD_SEQ_NO = #{bppCmmnBoardSeqNo}
+			AND USE_AT = 'Y'
 	</update>
 	
 

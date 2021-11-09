@@ -38,8 +38,16 @@ function updateBppCmmnBoardNewsData() {
 			cache: false,
 			type: "POST",
 			success: function (data) {
-				alert("수정 완료"+ data);
-				location.href = "/user/board/newsData.do?bppCmmnBoardSeqNo="+bppCmmnBoardSeqNo;
+				var result = JSON.parse(data);
+				console.log(result);
+				
+				if (result.isSucceeded == "Y") {
+					alert(result.msg);
+					location.href = "/user/board/newsData.do?bppCmmnBoardSeqNo=" + result.bppCmmnBoardSeqNo;
+				}
+				else {
+					alert(result.msg);
+				}
 			},
 			error: function(request, status, error){
 		        alert("code: "+request.status+"\n"+"error: "+error+"\n"+"message: "+request.responseText);

@@ -59,11 +59,10 @@ public class UserMainController {
 	@Resource(name = "propertiesService")
 	protected EgovPropertyService propertiesService;
 	
-	// 임시 변수
-	final static String USE_AT_1 = "1";
-	final static String USE_AT_0 = "0";
-	final static String LOGINID = "lsy";
-	final static String LOGINID2 = "aaa";
+	final String USER = "USER";
+	final String CHCKER = "CHCKER";
+	final String YES = "Y";
+	final String NO = "N";
 	
 	/**
 	 * 로그인
@@ -92,14 +91,9 @@ public class UserMainController {
 	@ResponseBody
 	@RequestMapping(value = "/user/main/selectBppMembMgmExists.do", method=RequestMethod.POST)
 	public HashMap<String, String> selectBppMembMgmExists(@RequestParam HashMap<String, String> paramMap, ModelMap model, HttpServletRequest request, HttpServletResponse response ) throws Exception {
-		model.addAttribute("topMenuCd", "intrcn");
-		model.addAttribute("subMenuCd", "intrcn");
-		
-		System.out.println("로그인 처리 시작---> " + paramMap.toString());
-		
 		HashMap<String, String> resultMap = userMainService.selectBppMembMgmExists(paramMap);
-		
-		if (resultMap.get("isSucceeded") == "Y") {
+		System.out.println("로긴결과: " + resultMap.toString());
+		if (resultMap.get("isSucceeded") == YES) {
 			EgovSessionCookieUtil.setSessionAttribute(request, "loginId", resultMap.get("bppMembId"));
 			EgovSessionCookieUtil.setSessionAttribute(request, "loginNm", resultMap.get("bppMembNm"));
 			EgovSessionCookieUtil.setSessionAttribute(request, "loginTy", resultMap.get("bppMembTy"));
@@ -188,17 +182,12 @@ public class UserMainController {
 	@ResponseBody
 	@RequestMapping(value = "/user/main/insertBppMembMgmUser.do", method = RequestMethod.POST)
 	public HashMap<String, String> insertBppMembMgmUser(@RequestParam HashMap<String, String> paramMap, ModelMap model, HttpServletRequest request, HttpServletResponse response ) throws Exception {
-		model.addAttribute("topMenuCd", "intrcn");
-		model.addAttribute("subMenuCd", "intrcn");
+		paramMap.put("bppMembTy", USER);
+		paramMap.put("useStplatAgreAt", YES);
+		paramMap.put("indvInfoAgreAt", YES);
 		
-		paramMap.put("loginId", LOGINID);
-		paramMap.put("bppMembTy", "user");
-		paramMap.put("useStplatAgreAt", "1");
-		paramMap.put("indvInfoAgreAt", "1");
-		paramMap.put("useAt", USE_AT_1);
-		
-		System.out.println("일반사용자 회원가입 처리 시작--->" + paramMap.toString());
 		HashMap<String, String> resultMap = userMainService.insertBppMembMgm(paramMap);
+		
 		System.out.println("일반사용자 회원가입 처리 완료--->" + resultMap.toString());
 		
 		return resultMap;
@@ -231,16 +220,9 @@ public class UserMainController {
 	@ResponseBody
 	@RequestMapping(value = "/user/main/insertBppMembMgmChcker.do", method = RequestMethod.POST)
 	public HashMap<String, String> insertBppMembMgmChcker(@RequestParam HashMap<String, String> paramMap, ModelMap model, HttpServletRequest request, HttpServletResponse response ) throws Exception {
-		model.addAttribute("topMenuCd", "intrcn");
-		model.addAttribute("subMenuCd", "intrcn");
-		
-		paramMap.put("loginId", LOGINID);
-		paramMap.put("bppMembTy", "chcker");
-		paramMap.put("useStplatAgreAt", "1");
-		paramMap.put("indvInfoAgreAt", "1");
-		paramMap.put("useAt", USE_AT_0);
-		
-		System.out.println("검토자 회원가입 처리 시작--->" + paramMap.toString());
+		paramMap.put("bppMembTy", CHCKER);
+		paramMap.put("useStplatAgreAt", YES);
+		paramMap.put("indvInfoAgreAt", YES);
 		
 		HashMap<String, String> resultMap = userMainService.insertBppMembMgm(paramMap);
 		
@@ -259,11 +241,6 @@ public class UserMainController {
 	@ResponseBody
 	@RequestMapping(value = "/user/main/selectBppMembIdNotExists.do", method = RequestMethod.POST)
 	public HashMap<String, String> selectBppMembIdNotExists(@RequestParam HashMap<String, String> paramMap, ModelMap model, HttpServletRequest request, HttpServletResponse response ) throws Exception {
-		model.addAttribute("topMenuCd", "intrcn");
-		model.addAttribute("subMenuCd", "intrcn");
-		
-		System.out.println("아이디 중복체크 시작---> " + paramMap.toString());
-		
 		HashMap<String, String> resultMap = userMainService.selectBppMembIdNotExists(paramMap);
 		
 		System.out.println("아이디 중복체크 완료---> " + resultMap.toString());
@@ -298,8 +275,6 @@ public class UserMainController {
 	@RequestMapping(value = "/user/main/selectBppMembId.do")
 	@ResponseBody
 	public HashMap<String, String> selectBppMembId(@RequestParam HashMap<String, String> paramMap, ModelMap model, HttpServletRequest request, HttpServletResponse response ) throws Exception {
-		System.out.println("아이디 찾기 처리 시작---> " + paramMap.toString());
-		
 		HashMap<String, String> resultMap = userMainService.selectBppMembId(paramMap);
 		
 		System.out.println("아이디 찾기 처리 완료---> " + resultMap.toString());
@@ -354,7 +329,7 @@ public class UserMainController {
 		
 		HashMap<String, String> resultMap = userMainService.selectBppMembPwd(paramMap);
 		
-		if (resultMap.get("isSucceeded") == "Y") {
+		if (resultMap.get("isSucceeded") == YES) {
 			EgovSessionCookieUtil.setSessionAttribute(request, "tempoBppMembId", resultMap.get("bppMembId"));
 		}
 		

@@ -46,9 +46,6 @@ public interface UserBoardMapper {
 	// 공통 게시글 생성
 	int insertBppCmmnBoard(HashMap<String, String> paramMap);
 	
-	// 질의응답 게시글 생성(사용자질문-관리자답변 기능)
-	int insertBppCmmnBoardQna(HashMap<String, String> paramMap);
-	
 	
 	// 조회
 	// 공통 게시글 리스트 조회

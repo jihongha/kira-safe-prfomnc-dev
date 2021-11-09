@@ -40,11 +40,11 @@ function insertBppCmmnBoardQna() {
 				console.log(result);
 				
 				if (result.isSucceeded == "Y") {
-					alert("작성 성공: " + result.msg);
+					alert(result.msg);
 					location.href = "/user/board/qna.do?bppCmmnBoardSeqNo=" + result.bppCmmnBoardSeqNo;
 				}
 				else {
-					alert("작성 실패: " + result.msg);
+					alert(result.msg);
 				}
 		    },
 		    error: function(request, status, error){
@@ -68,10 +68,10 @@ function isChecked() {
 	var check = $("input:checkbox[id='boardQuestOthbcAt']").prop("checked");
 	
 	if(check == true) {
-		$("input:checkbox[id='boardQuestOthbcAt']").val("1");
+		$("input:checkbox[id='boardQuestOthbcAt']").val("Y");
 
 	} else {
-		$("input:checkbox[id='boardQuestOthbcAt']").val("0");
+		$("input:checkbox[id='boardQuestOthbcAt']").val("N");
 	}
 }
 
@@ -96,7 +96,7 @@ $(function() {
 		<input type="file" id="" name=""><br>
 		
 		<label for="boardQuestOthbcAt">글 공개 여부</label>
-		<input type="checkbox" id="boardQuestOthbcAt" name="boardQuestOthbcAt" value="0" onclick="isChecked()"><br>
+		<input type="checkbox" id="boardQuestOthbcAt" name="boardQuestOthbcAt" value="N" onclick="isChecked()"><br>
 		
 		<button type="submit">작성</button>
 		<button type="reset" onclick="goQnaList()">취소</button>

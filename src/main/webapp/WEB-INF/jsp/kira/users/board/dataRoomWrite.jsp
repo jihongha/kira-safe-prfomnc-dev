@@ -39,11 +39,11 @@ function insertBppCmmnBoardDataRoom() {
 				console.log(result);
 				
 				if (result.isSucceeded == "Y") {
-					alert("작성 성공: " + result.msg);
+					alert(result.msg);
 					location.href = "/user/board/dataRoom.do?bppCmmnBoardSeqNo=" + result.bppCmmnBoardSeqNo;
 				}
 				else {
-					alert("작성 실패: " + result.msg);
+					alert(result.msg);
 				}
 		    },
 		    error: function(request, status, error){

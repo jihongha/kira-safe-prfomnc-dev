@@ -45,11 +45,11 @@ function updateBppCmmnBoardFaq() {
 				console.log(result);
 				
 				if (result.isSucceeded == "Y") {
-					alert("수정 성공: " + result.msg);
+					alert(result.msg);
 					location.href = "/user/board/faq.do?bppCmmnBoardSeqNo=" + result.bppCmmnBoardSeqNo;
 				}
 				else {
-					alert("수정 실패: " + result.msg);
+					alert(result.msg);
 				}
 		    },
 		    error: function(request, status, error){

@@ -40,11 +40,11 @@ function insertBppCmmnBoardNotice() {
 				console.log(result);
 				
 				if (result.isSucceeded == "Y") {
-					alert("작성 성공: " + result.msg);
+					alert(result.msg);
 					location.href = "/user/board/notice.do?bppCmmnBoardSeqNo=" + result.bppCmmnBoardSeqNo;
 				}
 				else {
-					alert("작성 실패: " + result.msg);
+					alert(result.msg);
 				}
 		    },
 		    error: function(request, status, error) {
@@ -69,11 +69,11 @@ function isChecked() {
 	
 	if(check == true) {
 		$(".pickData").attr("disabled", false);
-		$("input:checkbox[id='popupExpsrAt']").val("1");
+		$("input:checkbox[id='popupExpsrAt']").val("Y");
 
 	} else {
 	    $(".pickData").attr("disabled", true);
-		$("input:checkbox[id='popupExpsrAt']").val("0");
+		$("input:checkbox[id='popupExpsrAt']").val("N");
 	}
 }
 
@@ -98,7 +98,7 @@ $(function() {
 		<input type="file" id="" name=""><br>
 		
 		<label for="popupExpsrAt">팝업 노출 여부</label>
-		<input type="checkbox" id="popupExpsrAt" name="popupExpsrAt" value="0" onclick="isChecked()"><br>
+		<input type="checkbox" id="popupExpsrAt" name="popupExpsrAt" value="N" onclick="isChecked()"><br>
 		
 		<label for="popupExpsrBgnde">팝업 노출 시작일</label>
 		<input type="date" id="popupExpsrBgnde" class="pickData" name="popupExpsrBgnde" disabled="disabled"><br>
