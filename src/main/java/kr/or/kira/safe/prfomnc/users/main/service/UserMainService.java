@@ -16,6 +16,9 @@
 package kr.or.kira.safe.prfomnc.users.main.service;
 
 import java.util.HashMap;
+import java.util.List;
+
+import egovframework.rte.psl.dataaccess.util.EgovMap;
 
 /**
  * @Class Name : UserMainService.java
@@ -47,10 +50,18 @@ public interface UserMainService {
 	// 아이디 찾기 처리
 	HashMap<String, String> selectBppMembId(HashMap<String, String> paramMap);
 	
-	// 아이디 찾기 처리
+	// 아이디 리스트 찾기 처리
+	List<EgovMap> selectBppMembIdList(HashMap<String, String> paramMap);
+	
+	// 비밀번호 찾기 처리
 	HashMap<String, String> selectBppMembPwd(HashMap<String, String> paramMap);
 	
 	// 비밀번호 초기화 처리
 	HashMap<String, String> updateBppMembPwd(HashMap<String, String> paramMap);
 	
+	// 마이페이지 진입 전 비번 재확인
+	HashMap<String, String> selectAccountPwd(HashMap<String, String> paramMap);
+	
+	// 마이페이지 정보 조회
+	HashMap<String, String> selectBppMembMgm(HashMap<String, String> paramMap);
 }

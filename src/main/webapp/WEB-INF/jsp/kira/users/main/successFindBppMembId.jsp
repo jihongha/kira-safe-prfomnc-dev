@@ -1,5 +1,5 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -18,10 +18,18 @@ function goFindBppMembPwd() {
 </head>
 <body>
 
-<h3>회원님의 아이디 찾기 결과는 다음과 같습니다.</h3><br>
+<h3>아이디 찾기 결과</h3><br>
 
 <div>
-	<p>아이디: <b>${bppMembId}</b>
+	<c:if test="${empty resultList}">
+		<p>해당 정보의 아이디가 존재하지 않습니다. <br>
+	</c:if>
+	<c:if test="${not empty resultList}">
+		<c:forEach items="${resultList}" var="egovMap">
+			<p>아이디: <b>${egovMap.bppMembId}</b>
+		</c:forEach>
+	</c:if>
+	
 </div>
 
 <button onclick="goLogin()">로그인 하기</button>

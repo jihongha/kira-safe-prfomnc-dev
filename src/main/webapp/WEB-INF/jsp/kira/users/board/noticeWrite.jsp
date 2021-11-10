@@ -1,3 +1,4 @@
+<%@page import="kr.or.kira.safe.prfomnc.cmmn.utl.EgovSessionCookieUtil"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
@@ -78,6 +79,14 @@ function isChecked() {
 }
 
 $(function() {
+<%
+	String loginId = (String) EgovSessionCookieUtil.getSessionAttribute(request, "loginId");
+	
+	if (loginId == null) { %>
+		alert("로그인 후 작성 가능합니다!");
+		history.back();
+<% } %>
+	
 	$("#bppCnnmBoardnoticeForm").on("submit", function(e){
 		insertBppCmmnBoardNotice();
 	    e.preventDefault();

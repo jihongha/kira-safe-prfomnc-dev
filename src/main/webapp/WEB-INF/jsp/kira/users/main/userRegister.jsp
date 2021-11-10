@@ -55,6 +55,7 @@ function goUserRegister() {
 			bppMembNm: $("#bppMembNm").val(),
 			bppMembBrthdy: $("#bppMembBrthdy").val(),
 			bppMembEmailAdres: $("#bppMembEmailAdres").val(),
+			bppMembTelno: $("#bppMembTelno").val(),
 			pwdChangQuesCd: $("#pwdChangQuesCd").val(),
 			pwdChangAnsInfo: $("#pwdChangAnsInfo").val()
 		},
@@ -106,11 +107,11 @@ $(function() {
 			</tr>
 			<tr>
 				<td>비밀번호: </td>
-				<td><input type="text" id="bppMembPwd" name="bppMembPwd" maxlength="30"></td>
+				<td><input type="password" id="bppMembPwd" name="bppMembPwd" maxlength="30"></td>
 			</tr>
 			<tr>
 				<td>비밀번호 재확인: </td>
-				<td><input type="text" id="bppMembPwdAgain" name="bppMembPwdAgain" maxlength="30"><span id="alertPwd"></span></td>
+				<td><input type="password" id="bppMembPwdAgain" name="bppMembPwdAgain" maxlength="30"><span id="alertPwd"></span></td>
 			</tr>
 			<tr>
 				<td>이름: </td>
@@ -123,6 +124,10 @@ $(function() {
 			<tr>
 				<td>이메일: </td>
 				<td><input type="text" id="bppMembEmailAdres" name="bppMembEmailAdres"></td>
+			</tr>
+			<tr>
+				<td>전화번호: </td>
+				<td><input type="text" id="bppMembTelno" name="bppMembTelno" maxlength="30"></td>
 			</tr>
 			<tr>
 				<td>비밀번호 변경 질문: </td>

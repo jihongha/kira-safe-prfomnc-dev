@@ -481,7 +481,7 @@ public class UserBoardController {
 	 * @return
 	 * @throws Exception
 	 */
-	@RequestMapping(value = "/user/board/newsData.do", method=RequestMethod.GET)
+	@RequestMapping(value = "/user/board/newsData.do")
 	public String nesDta(@RequestParam HashMap<String, String> paramMap, ModelMap model, HttpServletRequest request, HttpServletResponse response) throws Exception {
 		model.addAttribute("topMenuCd", "board");
 		model.addAttribute("subMenuCd", "newsData");

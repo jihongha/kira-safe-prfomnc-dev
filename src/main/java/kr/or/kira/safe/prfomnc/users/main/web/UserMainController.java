@@ -16,6 +16,7 @@
 package kr.or.kira.safe.prfomnc.users.main.web;
 
 import java.util.HashMap;
+import java.util.List;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
@@ -29,6 +30,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import egovframework.rte.fdl.property.EgovPropertyService;
+import egovframework.rte.psl.dataaccess.util.EgovMap;
 import kr.or.kira.safe.prfomnc.cmmn.utl.EgovSessionCookieUtil;
 import kr.or.kira.safe.prfomnc.users.main.service.UserMainService;
 
@@ -72,7 +74,7 @@ public class UserMainController {
 	 * @throws Exception
 	 */
 	@RequestMapping(value = "/user/main/userLogin.do")
-	public String userLogin(@RequestParam HashMap<String, String> paramMap, ModelMap model, HttpServletRequest request, HttpServletResponse response ) throws Exception {
+	public String userLogin(@RequestParam HashMap<String, String> paramMap, ModelMap model, HttpServletRequest request, HttpServletResponse response) throws Exception {
 		model.addAttribute("topMenuCd", "intrcn");
 		model.addAttribute("subMenuCd", "intrcn");
 		
@@ -90,7 +92,7 @@ public class UserMainController {
 	 */
 	@ResponseBody
 	@RequestMapping(value = "/user/main/selectBppMembMgmExists.do", method=RequestMethod.POST)
-	public HashMap<String, String> selectBppMembMgmExists(@RequestParam HashMap<String, String> paramMap, ModelMap model, HttpServletRequest request, HttpServletResponse response ) throws Exception {
+	public HashMap<String, String> selectBppMembMgmExists(@RequestParam HashMap<String, String> paramMap, ModelMap model, HttpServletRequest request, HttpServletResponse response) throws Exception {
 		HashMap<String, String> resultMap = userMainService.selectBppMembMgmExists(paramMap);
 		System.out.println("로긴결과: " + resultMap.toString());
 		if (resultMap.get("isSucceeded") == YES) {
@@ -112,7 +114,7 @@ public class UserMainController {
 	 * @throws Exception
 	 */
 	@RequestMapping(value = "/user/main/successRegister.do")
-	public String successRegister(@RequestParam HashMap<String, String> paramMap, ModelMap model, HttpServletRequest request, HttpServletResponse response ) throws Exception {
+	public String successRegister(@RequestParam HashMap<String, String> paramMap, ModelMap model, HttpServletRequest request, HttpServletResponse response) throws Exception {
 		model.addAttribute("topMenuCd", "intrcn");
 		model.addAttribute("subMenuCd", "intrcn");
 		
@@ -129,7 +131,7 @@ public class UserMainController {
 	 * @throws Exception
 	 */
 	@RequestMapping(value = "/user/main/useTerms.do")
-	public String userTerms(@RequestParam HashMap<String, String> paramMap, ModelMap model, HttpServletRequest request, HttpServletResponse response ) throws Exception {
+	public String userTerms(@RequestParam HashMap<String, String> paramMap, ModelMap model, HttpServletRequest request, HttpServletResponse response) throws Exception {
 		model.addAttribute("topMenuCd", "intrcn");
 		model.addAttribute("subMenuCd", "intrcn");
 		
@@ -146,7 +148,7 @@ public class UserMainController {
 	 * @throws Exception
 	 */
 	@RequestMapping(value = "/user/main/registerType.do")
-	public String registerType(@RequestParam HashMap<String, String> paramMap, ModelMap model, HttpServletRequest request, HttpServletResponse response ) throws Exception {
+	public String registerType(@RequestParam HashMap<String, String> paramMap, ModelMap model, HttpServletRequest request, HttpServletResponse response) throws Exception {
 		model.addAttribute("topMenuCd", "intrcn");
 		model.addAttribute("subMenuCd", "intrcn");
 		
@@ -163,7 +165,7 @@ public class UserMainController {
 	 * @throws Exception
 	 */
 	@RequestMapping(value = "/user/main/userRegister.do")
-	public String userRegister(@RequestParam HashMap<String, String> paramMap, ModelMap model, HttpServletRequest request, HttpServletResponse response ) throws Exception {
+	public String userRegister(@RequestParam HashMap<String, String> paramMap, ModelMap model, HttpServletRequest request, HttpServletResponse response) throws Exception {
 		model.addAttribute("topMenuCd", "intrcn");
 		model.addAttribute("subMenuCd", "intrcn");
 		
@@ -181,7 +183,7 @@ public class UserMainController {
 	 */
 	@ResponseBody
 	@RequestMapping(value = "/user/main/insertBppMembMgmUser.do", method = RequestMethod.POST)
-	public HashMap<String, String> insertBppMembMgmUser(@RequestParam HashMap<String, String> paramMap, ModelMap model, HttpServletRequest request, HttpServletResponse response ) throws Exception {
+	public HashMap<String, String> insertBppMembMgmUser(@RequestParam HashMap<String, String> paramMap, ModelMap model, HttpServletRequest request, HttpServletResponse response) throws Exception {
 		paramMap.put("bppMembTy", USER);
 		paramMap.put("useStplatAgreAt", YES);
 		paramMap.put("indvInfoAgreAt", YES);
@@ -201,7 +203,7 @@ public class UserMainController {
 	 * @throws Exception
 	 */
 	@RequestMapping(value = "/user/main/chckerRegister.do")
-	public String chckerRegister(@RequestParam HashMap<String, String> paramMap, ModelMap model, HttpServletRequest request, HttpServletResponse response ) throws Exception {
+	public String chckerRegister(@RequestParam HashMap<String, String> paramMap, ModelMap model, HttpServletRequest request, HttpServletResponse response) throws Exception {
 		model.addAttribute("topMenuCd", "intrcn");
 		model.addAttribute("subMenuCd", "intrcn");
 		
@@ -219,7 +221,7 @@ public class UserMainController {
 	 */
 	@ResponseBody
 	@RequestMapping(value = "/user/main/insertBppMembMgmChcker.do", method = RequestMethod.POST)
-	public HashMap<String, String> insertBppMembMgmChcker(@RequestParam HashMap<String, String> paramMap, ModelMap model, HttpServletRequest request, HttpServletResponse response ) throws Exception {
+	public HashMap<String, String> insertBppMembMgmChcker(@RequestParam HashMap<String, String> paramMap, ModelMap model, HttpServletRequest request, HttpServletResponse response) throws Exception {
 		paramMap.put("bppMembTy", CHCKER);
 		paramMap.put("useStplatAgreAt", YES);
 		paramMap.put("indvInfoAgreAt", YES);
@@ -240,7 +242,7 @@ public class UserMainController {
 	 */
 	@ResponseBody
 	@RequestMapping(value = "/user/main/selectBppMembIdNotExists.do", method = RequestMethod.POST)
-	public HashMap<String, String> selectBppMembIdNotExists(@RequestParam HashMap<String, String> paramMap, ModelMap model, HttpServletRequest request, HttpServletResponse response ) throws Exception {
+	public HashMap<String, String> selectBppMembIdNotExists(@RequestParam HashMap<String, String> paramMap, ModelMap model, HttpServletRequest request, HttpServletResponse response) throws Exception {
 		HashMap<String, String> resultMap = userMainService.selectBppMembIdNotExists(paramMap);
 		
 		System.out.println("아이디 중복체크 완료---> " + resultMap.toString());
@@ -256,7 +258,7 @@ public class UserMainController {
 	 * @throws Exception
 	 */
 	@RequestMapping(value = "/user/main/findBppMembId.do")
-	public String findBppMembId(@RequestParam HashMap<String, String> paramMap, ModelMap model, HttpServletRequest request, HttpServletResponse response ) throws Exception {
+	public String findBppMembId(@RequestParam HashMap<String, String> paramMap, ModelMap model, HttpServletRequest request, HttpServletResponse response) throws Exception {
 		model.addAttribute("topMenuCd", "intrcn");
 		model.addAttribute("subMenuCd", "intrcn");
 		
@@ -274,7 +276,7 @@ public class UserMainController {
 	 */
 	@RequestMapping(value = "/user/main/selectBppMembId.do")
 	@ResponseBody
-	public HashMap<String, String> selectBppMembId(@RequestParam HashMap<String, String> paramMap, ModelMap model, HttpServletRequest request, HttpServletResponse response ) throws Exception {
+	public HashMap<String, String> selectBppMembId(@RequestParam HashMap<String, String> paramMap, ModelMap model, HttpServletRequest request, HttpServletResponse response) throws Exception {
 		HashMap<String, String> resultMap = userMainService.selectBppMembId(paramMap);
 		
 		System.out.println("아이디 찾기 처리 완료---> " + resultMap.toString());
@@ -283,17 +285,19 @@ public class UserMainController {
 	}
 	
 	/**
-	 * 아이디 찾기 성공 화면
+	 * 아이디 찾기 화면
 	 * @param paramMap
 	 * @param model
 	 * @return
 	 * @throws Exception
 	 */
-	@RequestMapping(value = "/user/main/successFindBppMembId.do", method=RequestMethod.POST)
-	public String successFindBppMembId(@RequestParam HashMap<String, String> paramMap, ModelMap model, HttpServletRequest request, HttpServletResponse response ) throws Exception {
-		System.out.println("아이디 찾기 성공 화면 시작---> " + paramMap.toString());
+	@RequestMapping(value = "/user/main/successFindBppMembId.do")
+	public String successFindBppMembId(@RequestParam HashMap<String, String> paramMap, ModelMap model, HttpServletRequest request, HttpServletResponse response) throws Exception {
+		List<EgovMap> resultList = userMainService.selectBppMembIdList(paramMap);
 		
-		model.addAttribute("bppMembId", paramMap.get("bppMembId"));
+		System.out.println("아이디 찾기 처리 완료---> " + resultList.toString());
+		
+		model.addAttribute("resultList", resultList);
 		
 		return "users/main/successFindBppMembId.bppTiles";
 	}
@@ -306,7 +310,7 @@ public class UserMainController {
 	 * @throws Exception
 	 */
 	@RequestMapping(value = "/user/main/findBppMembPwd.do")
-	public String findBppMembPwd(@RequestParam HashMap<String, String> paramMap, ModelMap model, HttpServletRequest request, HttpServletResponse response ) throws Exception {
+	public String findBppMembPwd(@RequestParam HashMap<String, String> paramMap, ModelMap model, HttpServletRequest request, HttpServletResponse response) throws Exception {
 		model.addAttribute("topMenuCd", "intrcn");
 		model.addAttribute("subMenuCd", "intrcn");
 		
@@ -324,7 +328,7 @@ public class UserMainController {
 	 */
 	@RequestMapping(value = "/user/main/selectBppMembPwd.do")
 	@ResponseBody
-	public HashMap<String, String> selectBppMembPwd(@RequestParam HashMap<String, String> paramMap, ModelMap model, HttpServletRequest request, HttpServletResponse response ) throws Exception {
+	public HashMap<String, String> selectBppMembPwd(@RequestParam HashMap<String, String> paramMap, ModelMap model, HttpServletRequest request, HttpServletResponse response) throws Exception {
 		System.out.println("비밀번호 찾기 처리 시작---> " + paramMap.toString());
 		
 		HashMap<String, String> resultMap = userMainService.selectBppMembPwd(paramMap);
@@ -346,7 +350,7 @@ public class UserMainController {
 	 * @throws Exception
 	 */
 	@RequestMapping(value = "/user/main/resetBppMembPwd.do")
-	public String resetBppMembPwd(@RequestParam HashMap<String, String> paramMap, ModelMap model, HttpServletRequest request, HttpServletResponse response ) throws Exception {
+	public String resetBppMembPwd(@RequestParam HashMap<String, String> paramMap, ModelMap model, HttpServletRequest request, HttpServletResponse response) throws Exception {
 		model.addAttribute("topMenuCd", "intrcn");
 		model.addAttribute("subMenuCd", "intrcn");
 		
@@ -365,7 +369,7 @@ public class UserMainController {
 	 */
 	@RequestMapping(value = "/user/main/updateBppMembPwd.do")
 	@ResponseBody
-	public HashMap<String, String> updateBppMembPwd(@RequestParam HashMap<String, String> paramMap, ModelMap model, HttpServletRequest request, HttpServletResponse response ) throws Exception {
+	public HashMap<String, String> updateBppMembPwd(@RequestParam HashMap<String, String> paramMap, ModelMap model, HttpServletRequest request, HttpServletResponse response) throws Exception {
 		System.out.println("비밀번호 초기화 처리 시작---> " + paramMap.toString());
 		
 		HashMap<String, String> resultMap = userMainService.updateBppMembPwd(paramMap);
@@ -385,7 +389,7 @@ public class UserMainController {
 	 * @throws Exception
 	 */
 	@RequestMapping(value = "/user/main/userLogout.do")
-	public String userLogout(@RequestParam HashMap<String, String> paramMap, ModelMap model, HttpServletRequest request, HttpServletResponse response ) throws Exception {
+	public String userLogout(@RequestParam HashMap<String, String> paramMap, ModelMap model, HttpServletRequest request, HttpServletResponse response) throws Exception {
 		System.out.println("로그아웃 처리 시작");
 		
 		EgovSessionCookieUtil.removeSessionAttribute(request, "loginId");
@@ -395,6 +399,69 @@ public class UserMainController {
 		System.out.println("로그아웃 처리 완료");
 		
 		return "users/main/userLogin.bppTiles";
+	}
+	
+	/**
+	 * 마이페이지
+	 * @param paramMap
+	 * @param model
+	 * @return
+	 * @throws Exception
+	 */
+	@RequestMapping(value = "/user/main/checkAccountPwd.do")
+	public String checkAccountPwd(@RequestParam HashMap<String, String> paramMap, ModelMap model, HttpServletRequest request, HttpServletResponse response) throws Exception {
+		model.addAttribute("topMenuCd", "intrcn");
+		model.addAttribute("subMenuCd", "intrcn");
+		
+		System.out.println("마이페이지 진입 전 화면");
+		
+		return "users/main/checkAccountPwd.bppTiles";
+	}
+	
+	/**
+	 * 마이페이지 진입 전 비번 체크
+	 * @param paramMap
+	 * @param model
+	 * @return
+	 * @throws Exception
+	 */
+	@RequestMapping(value = "/user/main/selectAccountPwd.do")
+	@ResponseBody
+	public HashMap<String, String> selectAccountPwd(@RequestParam HashMap<String, String> paramMap, ModelMap model, HttpServletRequest request, HttpServletResponse response) throws Exception {
+		System.out.println("마이페이지 진입 전 비번 체크 시작---> " + paramMap.toString());
+		
+		HashMap<String, String> resultMap = userMainService.selectAccountPwd(paramMap);
+		
+		System.out.println("마이페이지 진입 전 비번 체크 완료---> " + resultMap.toString());
+		
+		return resultMap;
+	}
+	
+	/**
+	 * 마이페이지 조회
+	 * @param paramMap
+	 * @param model
+	 * @return
+	 * @throws Exception
+	 */
+	@RequestMapping(value = "/user/main/myPage.do")
+	public String myPage(@RequestParam HashMap<String, String> paramMap, ModelMap model, HttpServletRequest request, HttpServletResponse response) throws Exception {
+		model.addAttribute("topMenuCd", "intrcn");
+		model.addAttribute("subMenuCd", "intrcn");
+		
+		String loginId = (String) EgovSessionCookieUtil.getSessionAttribute(request, "loginId");
+		String loginTy = (String) EgovSessionCookieUtil.getSessionAttribute(request, "loginTy");
+		
+		paramMap.put("loginId", loginId);
+		paramMap.put("loginTy", loginTy);
+		
+		HashMap<String, String> resultMap = userMainService.selectBppMembMgm(paramMap);
+		
+		System.out.println("마이페이지 진입 완료---> " + resultMap.toString());
+		
+		model.addAttribute("resultMap", resultMap);
+		
+		return "users/main/myPage.bppTiles";
 	}
 	  
 }

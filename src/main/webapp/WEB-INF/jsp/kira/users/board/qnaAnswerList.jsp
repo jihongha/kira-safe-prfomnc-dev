@@ -14,6 +14,20 @@
 function goQnaWrite(){
 	location.href = "/user/board/qnaWrite.do";
 }
+function gotQnaAnswer(bppCmmnBoardSeqNo) {
+    var form = document.createElement("form");
+    form.setAttribute("method", "post");
+    form.setAttribute("action", "/user/board/qnaAnswer.do");
+    
+    var hiddenField = document.createElement("input");
+    hiddenField.setAttribute("type", "hidden");
+    hiddenField.setAttribute("name", "bppCmmnBoardSeqNo");
+    hiddenField.setAttribute("value", bppCmmnBoardSeqNo);
+    
+    form.appendChild(hiddenField);
+    document.body.appendChild(form);
+    form.submit();
+}
 </script>
 
 </head>
@@ -46,9 +60,9 @@ function goQnaWrite(){
            </thead>
            <tbody>
            	<c:forEach items="${resultMap}" var="egovMap">
-           		<tr>
+           		<tr onclick="goQnaAnswer('${egovMap.bppCmmnBoardSeqNo}')" style="cursor:pointer;">
            			<td>
-           				<a href="/user/board/qnaAnswer.do?bppCmmnBoardSeqNo=${egovMap.bppCmmnBoardSeqNo}&boardQuestOthbcAt=${egovMap.boardQuestOthbcAt}">${egovMap.bppCmmnBoardSeqNo}</a>
+           				${egovMap.bppCmmnBoardSeqNo}
            			</td>
            			<td>
            				<c:if test="${egovMap.boardQuestOthbcAt eq 'N'}">
@@ -59,7 +73,7 @@ function goQnaWrite(){
 		               	</c:if>
            			</td>
            			<td>
-        				<a href="/user/board/qnaAnswer.do?bppCmmnBoardSeqNo=${egovMap.bppCmmnBoardSeqNo}&boardQuestOthbcAt=${egovMap.boardQuestOthbcAt}">${egovMap.bppCmmnBoardSj}</a>
+        				${egovMap.bppCmmnBoardSj}
            			</td>
            			<td>${egovMap.firstWrtrId}</td>
            			<td>

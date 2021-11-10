@@ -10,6 +10,21 @@
 function goNoticeWrite(){
 	location.href = "/user/board/noticeWrite.do";
 }
+
+function goNotice(bppCmmnBoardSeqNo) {
+    var form = document.createElement("form");
+    form.setAttribute("method", "post");
+    form.setAttribute("action", "/user/board/notice.do");
+    
+    var hiddenField = document.createElement("input");
+    hiddenField.setAttribute("type", "hidden");
+    hiddenField.setAttribute("name", "bppCmmnBoardSeqNo");
+    hiddenField.setAttribute("value", bppCmmnBoardSeqNo);
+    
+    form.appendChild(hiddenField);
+    document.body.appendChild(form);
+    form.submit();
+}
 </script>
 
 </head>
@@ -37,9 +52,9 @@ function goNoticeWrite(){
               </thead>
               <tbody>
                 <c:forEach items="${resultMap}" var="egovMap">
-	                <tr>
-	                  <td><a href="/user/board/notice.do?bppCmmnBoardSeqNo=${egovMap.bppCmmnBoardSeqNo}">${egovMap.bppCmmnBoardSeqNo}</a></td>
-	                  <td><a href="/user/board/notice.do?bppCmmnBoardSeqNo=${egovMap.bppCmmnBoardSeqNo}">${egovMap.bppCmmnBoardSj}</a></td>
+	                <tr onclick="goNotice('${egovMap.bppCmmnBoardSeqNo}')" style="cursor:pointer;">
+	                  <td>${egovMap.bppCmmnBoardSeqNo}</td>
+	                  <td>${egovMap.bppCmmnBoardSj}</td>
 	                  <td>${egovMap.lastUpdtDt}</td>
 	                  <td>${egovMap.bppCmmnBoardRdcnt}</td>
 	                </tr>

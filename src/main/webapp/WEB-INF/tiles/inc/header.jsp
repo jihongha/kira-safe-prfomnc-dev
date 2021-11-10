@@ -1,6 +1,7 @@
 <%@page import="kr.or.kira.safe.prfomnc.cmmn.utl.EgovSessionCookieUtil"%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib uri="http://tiles.apache.org/tags-tiles"  prefix="tiles"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%
 	//상위메뉴코드
 	String topMenuCd 	=	"";
@@ -49,18 +50,22 @@
             </li>
           </ul>
           <ul class="nav navbar-nav navbar-right">
-			<li><% if (loginNm != null) {%><%=loginNm %>님<%} else {%><%} %></li>
+			<li><c:if test="${not empty loginNm}"><%=loginNm %>님</c:if></li>
+			
             <li style="line-height: 50px; margin-right: 15px;">
-            	<% if (loginId == null) { %>
+            	<c:if test="${empty loginId}">
             		<button type="button" class="btn btn-default" onclick="location='/user/main/userLogin.do'">로그인</button>
-            	<% } else { %>
+            	</c:if>
+            	
+            	<c:if test="${not empty loginId}">
 	            	<button type="button" class="btn btn-default" onclick="location='/user/main/userLogout.do'">로그아웃</button>
-            	<% } %>
+	            	<button type="button" class="btn btn-default" onclick="location='/user/main/checkAccountPwd.do'">마이페이지</button>
+            	</c:if>
             </li>
             <li style="line-height: 50px;">
-            	<% if (loginId == null) { %>
+            	<c:if test="${empty loginId}">
 	            	<button type="button" class="btn btn-primary" onclick="location='/user/main/useTerms.do'">회원가입</button>
-            	<% } %>
+            	</c:if>
             </li>
           </ul>
         </div><!--/.nav-collapse -->

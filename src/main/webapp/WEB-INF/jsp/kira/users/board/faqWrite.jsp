@@ -1,3 +1,4 @@
+<%@page import="kr.or.kira.safe.prfomnc.cmmn.utl.EgovSessionCookieUtil"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
@@ -69,6 +70,14 @@ function goFaqList(){
 }
 
 $(function() {
+<%
+	String loginId = (String) EgovSessionCookieUtil.getSessionAttribute(request, "loginId");
+	
+	if (loginId == null) { %>
+		alert("로그인 후 작성 가능합니다!");
+		history.back();
+<% } %>	
+
 	$("#bppCnnmBoardFaqForm").on("submit", function(e){
 		insertBppCmmnBoardFaq();
 	    e.preventDefault();

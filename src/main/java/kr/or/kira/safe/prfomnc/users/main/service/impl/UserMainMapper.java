@@ -54,9 +54,18 @@ public interface UserMainMapper {
 	// 아이디 찾기 처리
 	EgovMap selectBppMembId(HashMap<String, String> paramMap);
 	
+	// 아이디 찾기 리스트 처리
+	List<EgovMap> selectBppMembIdList(HashMap<String, String> paramMap);
+	
 	// 비밀번호 찾기 처리
 	EgovMap selectBppMembPwd(HashMap<String, String> paramMap);
 	
 	// 비밀번호 초기화 처리
 	int updateBppMembPwd(HashMap<String, String> paramMap);
+	
+	// 마이페이지 진입 전 비번 재확인
+	int selectAccountPwd(HashMap<String, String> paramMap);
+	
+	// 마이페이지 정보 조회
+	EgovMap selectBppMembMgm(HashMap<String, String> paramMap);
 }

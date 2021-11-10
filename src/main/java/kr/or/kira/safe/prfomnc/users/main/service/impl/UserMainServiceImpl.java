@@ -16,6 +16,7 @@
 package kr.or.kira.safe.prfomnc.users.main.service.impl;
 
 import java.util.HashMap;
+import java.util.List;
 
 import javax.annotation.Resource;
 
@@ -58,7 +59,6 @@ public class UserMainServiceImpl extends EgovAbstractServiceImpl implements User
 	final String YES = "Y";
 	final String NO = "N";
 
-	
 	// 회원가입 시 아이디 중복체크
 	@Override
 	public HashMap<String, String> selectBppMembIdNotExists(HashMap<String, String> paramMap) {
@@ -75,7 +75,6 @@ public class UserMainServiceImpl extends EgovAbstractServiceImpl implements User
 		
 		return resultMap;
 	}
-
 
 	// 회원가입 처리
 	@Override
@@ -140,7 +139,7 @@ public class UserMainServiceImpl extends EgovAbstractServiceImpl implements User
 		return resultMap;
 	}
 
-
+	// 아이디 찾기
 	@Override
 	public HashMap<String, String> selectBppMembId(HashMap<String, String> paramMap) {
 		EgovMap result = userMainMapper.selectBppMembId(paramMap);
@@ -159,9 +158,13 @@ public class UserMainServiceImpl extends EgovAbstractServiceImpl implements User
 		return resultMap;
 	}
 	
-	
+	// 아이디 리스트 찾기
+	@Override
+	public List<EgovMap> selectBppMembIdList(HashMap<String, String> paramMap) {
+		return userMainMapper.selectBppMembIdList(paramMap);
+	}
 
-
+	// 비밀번호 찾기
 	@Override
 	public HashMap<String, String> selectBppMembPwd(HashMap<String, String> paramMap) {
 		EgovMap result = userMainMapper.selectBppMembPwd(paramMap);
@@ -180,7 +183,7 @@ public class UserMainServiceImpl extends EgovAbstractServiceImpl implements User
 		return resultMap;
 	}
 
-
+	// 비밀번호 초기화
 	@Override
 	public HashMap<String, String> updateBppMembPwd(HashMap<String, String> paramMap) {
 		int row = userMainMapper.updateBppMembPwd(paramMap);
@@ -197,7 +200,41 @@ public class UserMainServiceImpl extends EgovAbstractServiceImpl implements User
 		
 		return resultMap;
 	}
-	
-	
-	
+
+	// 마이페이지 진입 전 비번 재확인
+	@Override
+	public HashMap<String, String> selectAccountPwd(HashMap<String, String> paramMap) {
+		int row = userMainMapper.selectAccountPwd(paramMap);
+		
+		HashMap<String, String> resultMap = new HashMap<String, String>();
+		
+		if (row == 1) {
+			resultMap.put("isSucceeded", YES);
+			resultMap.put("msg", "본인 확인 완료");
+		} else {
+			resultMap.put("isSucceeded", NO);
+			resultMap.put("msg", "본인 확인 실패");
+		}
+		
+		return resultMap;
+	}
+
+	// 마이페이지 정보 조회
+	@Override
+	public HashMap<String, String> selectBppMembMgm(HashMap<String, String> paramMap) {
+		EgovMap result = userMainMapper.selectBppMembMgm(paramMap);
+		
+		HashMap<String, String> resultMap = new HashMap<String, String>();
+		
+		if (result != null) {
+			resultMap.putAll(result);
+			resultMap.put("isSucceeded", YES);
+			resultMap.put("msg", "마이페이지 조회 성공");
+		} else {
+			resultMap.put("isSucceeded", NO);
+			resultMap.put("msg", "마이페이지 조회 실패");
+		}
+		
+		return resultMap;
+	}
 }

@@ -26,6 +26,7 @@
 			PWD_CHANG_ANS_INFO,
 			BPP_MEMB_BRTHDY,
 			BPP_MEMB_EMAIL_ADRES,
+			BPP_MEMB_TELNO,
 			BPP_MEMB_SBSCRB_DT,
 			<if test='chckerChrgSigunguCd != null'>
 				CHCKER_CHRG_SIGUNGU_CD,
@@ -50,6 +51,7 @@
 			#{pwdChangAnsInfo},
 			#{bppMembBrthdy},
 			#{bppMembEmailAdres},
+			#{bppMembTelno},
 			DATE_FORMAT(NOW(), '%Y%m%d%H%i%s'),
 			<if test='chckerChrgSigunguCd != null'>
 				#{chckerChrgSigunguCd},
@@ -84,13 +86,26 @@
 	<!-- 아이디 찾기 -->
 	<select id="selectBppMembId" parameterType="hashMap" resultType="egovMap">
 		SELECT
-			BPP_MEMB_ID,
-			USE_AT
+			BPP_MEMB_ID
 		FROM BPP_MEMB_MGM
 		WHERE
 			BPP_MEMB_NM = #{bppMembNm}
 			AND BPP_MEMB_BRTHDY = #{bppMembBrthdy}
 			AND BPP_MEMB_EMAIL_ADRES = #{bppMembEmailAdres}
+			AND BPP_MEMB_TELNO = #{bppMembTelno}
+			AND USE_AT = 'Y'
+	</select>
+	
+	<select id="selectBppMembIdList" parameterType="hashMap" resultType="egovMap">
+		SELECT
+			BPP_MEMB_ID
+		FROM BPP_MEMB_MGM
+		WHERE
+			BPP_MEMB_NM = #{bppMembNm}
+			AND BPP_MEMB_BRTHDY = #{bppMembBrthdy}
+			AND BPP_MEMB_EMAIL_ADRES = #{bppMembEmailAdres}
+			AND BPP_MEMB_TELNO = #{bppMembTelno}
+			AND USE_AT = 'Y'
 	</select>
 	
 	<!-- 비밀번호 찾기 -->
@@ -103,6 +118,7 @@
 			BPP_MEMB_ID = #{bppMembId}
 			AND BPP_MEMB_NM = #{bppMembNm}
 			AND BPP_MEMB_EMAIL_ADRES = #{bppMembEmailAdres}
+			AND BPP_MEMB_TELNO = #{bppMembTelno}
 			AND PWD_CHANG_QUES_CD = #{pwdChangQuesCd}
 			AND PWD_CHANG_ANS_INFO = #{pwdChangAnsInfo}
 			AND USE_AT = 'Y'
@@ -132,5 +148,38 @@
 			BPP_MEMB_ID = #{bppMembId}
 	</update>
 	
-
+	<!-- 마이페이지 진입 전 비번 재확인 -->
+	<select id="selectAccountPwd" parameterType="hashMap" resultType="int">
+		SELECT
+			COUNT(*)
+		FROM
+			BPP_MEMB_MGM
+		WHERE
+			BPP_MEMB_ID = #{bppMembId}
+			AND BPP_MEMB_PWD = #{bppMembPwd}
+			AND USE_AT = 'Y'
+	</select>
+	
+	<!-- 마이페이지 정보 조회 목록 -->
+	<select id="selectBppMembMgm" parameterType="hashMap" resultType="egovMap">
+		SELECT
+			BPP_MEMB_SEQ_NO,
+			BPP_MEMB_ID,
+			BPP_MEMB_NM,
+			BPP_MEMB_TY,
+			PWD_CHANG_QUES_CD,
+			PWD_CHANG_ANS_INFO,
+			BPP_MEMB_BRTHDY,
+			BPP_MEMB_EMAIL_ADRES,
+			BPP_MEMB_TELNO,
+			<if test='loginTy == "CHCKER"'>
+				CHCKER_CHRG_SIGUNGU_CD,
+			</if>
+			BPP_MEMB_SBSCRB_DT
+		FROM
+			BPP_MEMB_MGM
+		WHERE
+			BPP_MEMB_ID = #{loginId}
+			AND USE_AT = 'Y'
+	</select>
 </mapper>

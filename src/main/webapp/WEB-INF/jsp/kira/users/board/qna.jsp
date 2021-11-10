@@ -1,5 +1,5 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -25,6 +25,7 @@ function deleteBppCmmnBoard(){
 	}
 }
 
+
 </script>
 </head>
 <body>
@@ -48,16 +49,23 @@ function deleteBppCmmnBoard(){
 	<button type="reset" onclick="goQnaList()">목록</button>
 	
 	<br><br>
-	<table border="1">
-		<tr>
-			<td>답변</td>
-			<td>${resultMap.bppCmmnBoardAnswer}</td>
-		</tr>
-		<tr>
-			<td>답변일</td>
-			<td>${resultMap.lastUpdtDt}</td>
-		</tr>
-	</table>
+	
+	<c:if test="${resultMap.boardAnswerComptAt eq 'N'}">
+		<p> 답변 대기 중입니다.
+	</c:if>
+	
+	<c:if test="${resultMap.boardAnswerComptAt eq 'Y'}">
+		<table border="1">
+			<tr>
+				<td>답변</td>
+				<td>${resultMap.bppCmmnBoardAnswer}</td>
+			</tr>
+			<tr>
+				<td>답변일</td>
+				<td>${resultMap.lastUpdtDt}</td>
+			</tr>
+		</table>
+	</c:if>
 	
 </body>
 </html>

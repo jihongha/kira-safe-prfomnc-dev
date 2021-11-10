@@ -14,6 +14,21 @@
 function goQnaWrite(){
 	location.href = "/user/board/qnaWrite.do";
 }
+
+function goQna(bppCmmnBoardSeqNo) {
+    var form = document.createElement("form");
+    form.setAttribute("method", "post");
+    form.setAttribute("action", "/user/board/qna.do");
+    
+    var hiddenField = document.createElement("input");
+    hiddenField.setAttribute("type", "hidden");
+    hiddenField.setAttribute("name", "bppCmmnBoardSeqNo");
+    hiddenField.setAttribute("value", bppCmmnBoardSeqNo);
+    
+    form.appendChild(hiddenField);
+    document.body.appendChild(form);
+    form.submit();
+}
 </script>
 
 </head>
@@ -44,59 +59,67 @@ function goQnaWrite(){
                <th>조회수</th>
              </tr>
            </thead>
+           
            <tbody>
            	<c:forEach items="${resultMap}" var="egovMap">
-           		<tr>
-           			<td>
-           				<c:if test="${egovMap.boardQuestOthbcAt eq 'N'}">
-           					<c:choose>
-           						<c:when test="${egovMap.firstWrtrId eq loginId}">
-           							<a href="/user/board/qna.do?bppCmmnBoardSeqNo=${egovMap.bppCmmnBoardSeqNo}&boardQuestOthbcAt=${egovMap.boardQuestOthbcAt}">${egovMap.bppCmmnBoardSeqNo}</a>
-           						</c:when>
-           						<c:otherwise>
-	                				${egovMap.bppCmmnBoardSeqNo}
-           						</c:otherwise>
-           					</c:choose>
-		               	</c:if>
-		               	<c:if test="${egovMap.boardQuestOthbcAt eq 'Y'}">
-		               		<a href="/user/board/qna.do?bppCmmnBoardSeqNo=${egovMap.bppCmmnBoardSeqNo}&boardQuestOthbcAt=${egovMap.boardQuestOthbcAt}">${egovMap.bppCmmnBoardSeqNo}</a>
-		               	</c:if>
-           			</td>
-           			<td>
-           				<c:if test="${egovMap.boardQuestOthbcAt eq 'N'}">
-		               		비공개
-		               	</c:if>
-		               	<c:if test="${egovMap.boardQuestOthbcAt eq 'Y'}">
-		               		공개
-		               	</c:if>
-           			</td>
-           			<td>
-           				<c:if test="${egovMap.boardQuestOthbcAt eq 'N'}">
-           					<c:choose>
-           						<c:when test="${egovMap.firstWrtrId eq loginId}">
-           							<a href="/user/board/qna.do?bppCmmnBoardSeqNo=${egovMap.bppCmmnBoardSeqNo}&boardQuestOthbcAt=${egovMap.boardQuestOthbcAt}">${egovMap.bppCmmnBoardSj}</a>
-           						</c:when>
-           						<c:otherwise>
-	                				비공개 게시글입니다
-           						</c:otherwise>
-           					</c:choose>
-		               	</c:if>
-		               	<c:if test="${egovMap.boardQuestOthbcAt eq 'Y'}">
-		               		<a href="/user/board/qna.do?bppCmmnBoardSeqNo=${egovMap.bppCmmnBoardSeqNo}&boardQuestOthbcAt=${egovMap.boardQuestOthbcAt}">${egovMap.bppCmmnBoardSj}</a>
-		               	</c:if>
-           			</td>
-           			<td>${egovMap.firstWrtrId}</td>
-           			<td>
-           				<c:if test="${egovMap.boardAnswerComptAt eq 'N'}">
-		               		답변대기
-		               	</c:if>
-		               	<c:if test="${egovMap.boardAnswerComptAt eq 'Y'}">
-		               		답변완료
-		               	</c:if>
-           			</td>
-           			<td>${egovMap.lastUpdtDt}</td>
-           			<td>${egovMap.bppCmmnBoardRdcnt}</td>
-           		</tr>
+           		<c:if test="${egovMap.boardQuestOthbcAt eq 'N'}">
+  					<c:choose>
+   						<c:when test="${egovMap.firstWrtrId eq loginId}">
+   							<tr onclick="goQna('${egovMap.bppCmmnBoardSeqNo}')" style="cursor:pointer;">
+		           				<td>${egovMap.bppCmmnBoardSeqNo}</td>
+		           				<td>공개</td>
+		           				<td>${egovMap.bppCmmnBoardSj}</td>
+		           				<td>${egovMap.firstWrtrId}</td>
+		           				<td>
+			           				<c:if test="${egovMap.boardAnswerComptAt eq 'N'}">
+					               		답변대기
+					               	</c:if>
+					               	<c:if test="${egovMap.boardAnswerComptAt eq 'Y'}">
+					               		답변완료
+					               	</c:if>
+			           			</td>
+		           				<td>${egovMap.lastUpdtDt}</td>
+		           				<td>${egovMap.bppCmmnBoardRdcnt}</td>
+           					</tr>
+   						</c:when>
+   						<c:otherwise>
+   							<tr>
+		           				<td>${egovMap.bppCmmnBoardSeqNo}</td>
+		           				<td>비공개</td>
+		           				<td>비공개 게시글입니다</td>
+		           				<td>${egovMap.firstWrtrId}</td>
+		           				<td>
+			           				<c:if test="${egovMap.boardAnswerComptAt eq 'N'}">
+					               		답변대기
+					               	</c:if>
+					               	<c:if test="${egovMap.boardAnswerComptAt eq 'Y'}">
+					               		답변완료
+					               	</c:if>
+			           			</td>
+		           				<td>${egovMap.lastUpdtDt}</td>
+		           				<td>${egovMap.bppCmmnBoardRdcnt}</td>
+		           			</tr>
+   						</c:otherwise>
+   					</c:choose>
+               	</c:if>
+           		<c:if test="${egovMap.boardQuestOthbcAt eq 'Y'}">
+           			<tr onclick="goQna('${egovMap.bppCmmnBoardSeqNo}')" style="cursor:pointer;">
+           				<td>${egovMap.bppCmmnBoardSeqNo}</td>
+           				<td>공개</td>
+           				<td>${egovMap.bppCmmnBoardSj}</td>
+           				<td>${egovMap.firstWrtrId}</td>
+           				<td>
+	           				<c:if test="${egovMap.boardAnswerComptAt eq 'N'}">
+			               		답변대기
+			               	</c:if>
+			               	<c:if test="${egovMap.boardAnswerComptAt eq 'Y'}">
+			               		답변완료
+			               	</c:if>
+	           			</td>
+           				<td>${egovMap.lastUpdtDt}</td>
+           				<td>${egovMap.bppCmmnBoardRdcnt}</td>
+           			</tr>
+               	</c:if>
            	</c:forEach>
            </tbody>
          </table>

@@ -1,5 +1,4 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -52,6 +51,7 @@ function goChckerRegister() {
 			bppMembNm: $("#bppMembNm").val(),
 			bppMembBrthdy: $("#bppMembBrthdy").val(),
 			bppMembEmailAdres: $("#bppMembEmailAdres").val(),
+			bppMembTelno: $("#bppMembTelno").val(),
 			pwdChangQuesCd: $("#pwdChangQuesCd").val(),
 			pwdChangAnsInfo: $("#pwdChangAnsInfo").val(),
 			chckerChrgSigunguCd: $("#chckerChrgSigunguCd").val()
@@ -104,11 +104,11 @@ $(function() {
 			</tr>
 			<tr>
 				<td>비밀번호: </td>
-				<td><input type="text" id="bppMembPwd" name="bppMembPwd" maxlength="30"></td>
+				<td><input type="password" id="bppMembPwd" name="bppMembPwd" maxlength="30"></td>
 			</tr>
 			<tr>
 				<td>비밀번호 재확인: </td>
-				<td><input type="text" id="bppMembPwdAgain" name="bppMembPwdAgain" maxlength="30"><span id="alertPwd"></span></td>
+				<td><input type="password" id="bppMembPwdAgain" name="bppMembPwdAgain" maxlength="30"><span id="alertPwd"></span></td>
 			</tr>
 			<tr>
 				<td>이름: </td>
@@ -116,11 +116,15 @@ $(function() {
 			</tr>
 			<tr>
 				<td>생년월일: </td>
-				<td><input type="date" id="bppMembBrthdy" name="bppMembBrthdy"></td>
+				<td><input type="date" id="bppMembBrthdy" name="bppMembBrthdy" maxlength="10"></td>
 			</tr>
 			<tr>
 				<td>이메일: </td>
-				<td><input type="text" id="bppMembEmailAdres" name="bppMembEmailAdres"></td>
+				<td><input type="text" id="bppMembEmailAdres" name="bppMembEmailAdres" maxlength="100"></td>
+			</tr>
+			<tr>
+				<td>전화번호: </td>
+				<td><input type="text" id="bppMembTelno" name="bppMembTelno" maxlength="30"></td>
 			</tr>
 			<tr>
 				<td>비밀번호 변경 질문: </td>

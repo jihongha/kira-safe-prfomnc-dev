@@ -16,13 +16,12 @@ function goSelectBppMembPwd() {
 			bppMembId: $("#bppMembId").val(),
 			bppMembNm: $("#bppMembNm").val(),
 			bppMembEmailAdres: $("#bppMembEmailAdres").val(),
+			bppMembTelno: $("#bppMembTelno").val(),
 			pwdChangQuesCd: $("#pwdChangQuesCd").val(),
 			pwdChangAnsInfo: $("#pwdChangAnsInfo").val()
 		},
 		success: function(data) {
 			var result = JSON.parse(data);
-			console.log("--------------");
-			console.log(result);
 			
 			if (result.isSucceeded == "Y") {
 				alert(result.msg);
@@ -46,7 +45,7 @@ $(function() {
 </script>
 </head>
 <body>
-	<h1>여기는 비밀번호 찾기 화면!</h1>
+	<h1>비밀번호 찾기</h1>
 	
 	<form id="findBppMembPwdForm" name="findBppMembPwdForm" method="post">
 		<label>아이디: </label>
@@ -57,6 +56,9 @@ $(function() {
 		
 		<label>이메일: </label>
 		<input type="text" id="bppMembEmailAdres" name="bppMembEmailAdres"><br>
+		
+		<label>전화번호: </label>
+		<input type="text" id="bppMembTelno" name="bppMembTelno"><br>
 		
 		<label>비밀번호 변경 질문: </label>
 		<select name="pwdChangQuesCd" id="pwdChangQuesCd">
